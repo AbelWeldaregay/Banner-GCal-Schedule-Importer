@@ -1,10 +1,13 @@
 {
-	"manifest": 2,
 	"name": "ODU Google Calendar Importer",
 	"version": "0.001",
+	"manifest_version": 2,
 	"content_scripts": [
 		{
-			"js": "content.js"
+			"matches": [
+				"https://ssbstureg.gmu.edu/StudentRegistrationSsb/ssb/registrationHistory/registrationHistory"
+			],
+			"js": ["content.js"]
 		}
 	]
 }
