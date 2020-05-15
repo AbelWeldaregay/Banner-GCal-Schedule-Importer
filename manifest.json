@@ -1,0 +1,10 @@
+{
+	"manifest": 2,
+	"name": "ODU Google Calendar Importer",
+	"version": "0.001",
+	"content_scripts": [
+		{
+			"js": "content.js"
+		}
+	]
+}
