@@ -13,6 +13,10 @@
 			"js": ["content.js"]
 		}
 	],
+	"permissions": [
+		"tabs",
+		"storage"
+	],
 	"background": {
 		"scripts": ["background.js"]
 	}
