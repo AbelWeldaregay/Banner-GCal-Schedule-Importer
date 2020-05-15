@@ -1,13 +1,19 @@
 {
 	"name": "ODU Google Calendar Importer",
 	"version": "1.0",
+	"browser_action": {
+		"default_popup": "popup.html"
+	},
 	"manifest_version": 2,
 	"content_scripts": [
 		{
 			"matches": [
-				"https://ssbstureg.gmu.edu/StudentRegistrationSsb/ssb/registrationHistory/registrationHistory"
+				"<all_urls>"
 			],
 			"js": ["content.js"]
 		}
-	]
+	],
+	"background": {
+		"scripts": ["background.js"]
+	}
 }
