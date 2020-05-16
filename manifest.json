@@ -10,12 +10,14 @@
 			"matches": [
 				"<all_urls>"
 			],
-			"js": ["content.js"]
+			"js": ["content.js", "extract_schedule.js"]
 		}
 	],
 	"permissions": [
 		"tabs",
-		"storage"
+		"storage",
+		"http://*/",
+		"https://*/"
 	],
 	"background": {
 		"scripts": ["background.js"]
