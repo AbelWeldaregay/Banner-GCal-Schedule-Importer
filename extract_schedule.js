@@ -7,7 +7,7 @@ function extract_schedule() {
 	var meeting_info = child_divs.scheduleListView.getElementsByClassName("listViewMeetingInformation");
 	for (var i = 0; i < child_divs.length - 1; ++i) {
 		schedule.push({
-
+			 "course_title"	   : child_divs[0].getElementsByClassName("list-view-course-title")[i].innerText,
 			 "instructor_name" : child_divs[0].getElementsByClassName("listViewInstructorInformation")[i].innerText.split("\n")[0].split(":")[1],
 			 "course_crn"      : child_divs[0].getElementsByClassName("listViewInstructorInformation")[i].innerText.split("\n")[1].split(":")[1],
 			 "meeting_window"  : meeting_info[i].getElementsByTagName("span")[0].innerText.replace(/\s/g,'').split("--"),
