@@ -1,11 +1,11 @@
 extract_schedule();
-
 function extract_schedule() {
+	console.log("extract_schedule invoked");
 	var schedule_wrappers = document.getElementById("scheduleListViewWrapper");
 	var child_divs = schedule_wrappers.getElementsByTagName("div");
 	var schedule = [];
 	var meeting_info = child_divs.scheduleListView.getElementsByClassName("listViewMeetingInformation");
-	for (var i = 0; i < child_divs.length - 1; ++i) {
+	for (var i = 0; i < child_divs.length; ++i) {
 		schedule.push({
 			 "course_title"	   : child_divs[0].getElementsByClassName("list-view-course-title")[i].innerText,
 			 "instructor_name" : child_divs[0].getElementsByClassName("listViewInstructorInformation")[i].innerText.split("\n")[0].split(":")[1],
@@ -19,5 +19,10 @@ function extract_schedule() {
 		chrome.storage.local.set({"schedule": schedule}, function() {
 	   		console.log("course schedule value set");
 	   	});
+	   	chrome.runtime.sendMessage({
+                    data: "Hello popup, how are you"
+                }, function (response) {
+                    console.dir(response);
+        });
 	}
 }
