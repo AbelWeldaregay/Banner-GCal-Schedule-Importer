@@ -16,7 +16,8 @@ function extract_schedule() {
 			 "meeting_building": meeting_info[i].innerText.split(":")[5],
 			 "meeting_room"    : meeting_info[i].innerText.split(":")[6]
 		});
-		console.log(schedule);
-
+		chrome.storage.local.set({"schedule": schedule}, function() {
+	   		console.log("course schedule value set");
+	   	});
 	}
 }
