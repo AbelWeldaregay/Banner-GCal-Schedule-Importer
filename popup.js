@@ -36,14 +36,18 @@ function update_table() {
 	   		table_str += "<tr>";
 	   		table_str += "<td>"+schedule["schedule"][i]["course_title"]+ "(CRN: " + schedule["schedule"][i]["course_crn"] + ")" + "</td>";
 	   		table_str += "</br>";
-	   		table_str += "<td>" + schedule["schedule"][i]["meeting_building"] + " "+ schedule["schedule"][i]["meeting_room"] + "</td>";
-	   		table_str += "</br>";
-	   		table_str += "<td>";
-	   		for (var j = 0; j < schedule["schedule"][i]["meeting_days"].length; ++j) {
-	   			table_str += schedule["schedule"][i]["meeting_days"][j] + ", ";
-	   		}
-
-			table_str += schedule["schedule"][i]["meeting_times"][0] + " to " + schedule["schedule"][i]["meeting_times"][1];			   		
+	   		
+	   		if (schedule["schedule"][i]["meeting_times"] === "Online") {
+	   			table_str += "Online"
+	   		} else {
+	   			table_str += "<td>" + schedule["schedule"][i]["meeting_building"] + " "+ schedule["schedule"][i]["meeting_room"] + "</td>";
+		   		table_str += "</br>";
+		   		table_str += "<td>";
+		   		for (var j = 0; j < schedule["schedule"][i]["meeting_days"].length; ++j) {
+		   			table_str += schedule["schedule"][i]["meeting_days"][j] + ", ";
+		   		}
+	   			table_str += schedule["schedule"][i]["meeting_times"][0] + " to " + schedule["schedule"][i]["meeting_times"][1];
+	   		}			   		
 	   		table_str += "</tr>";
 	   		table_str += "</br>";
 	   		table_str += "</br>";
