@@ -4,7 +4,7 @@
 	"version": "1.0",
 	// "key": "TODO ENTER KEY HERE",
 	"browser_action": {
-		"default_icon": "web_hi_res_512.png",
+		"default_icon": "icons/web_hi_res_512.png",
 		"default_popup": "popup.html"
 	},
 	"manifest_version": 2,
