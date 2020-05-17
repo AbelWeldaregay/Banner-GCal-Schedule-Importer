@@ -1,6 +1,8 @@
 {
 	"name": "ODU Google Calendar Importer",
+	"description": "Imports your ODU class schedule to Google Calendar. Created by Abel Weldaregay",
 	"version": "1.0",
+	"key": "TODO ENTER KEY HERE",
 	"browser_action": {
 		"default_popup": "popup.html"
 	},
@@ -14,10 +16,14 @@
 		}
 	],
 	"permissions": [
+		"activeTab",
 		"tabs",
+		"identity",
+		"https://ajax.googleapis.com/*",
+		"https://apis.google.com/*",
 		"storage",
-		"http://*/",
-		"https://*/"
+		"http://xessb.odu.edu/StudentRegistrationSsb/ssb/registrationHistory/*",
+		"https://xessb.odu.edu/StudentRegistrationSsb/ssb/registrationHistory/*"
 	],
 	"background": {
 		"scripts": ["background.js"]
