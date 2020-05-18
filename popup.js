@@ -58,6 +58,16 @@ function update_table() {
 
 	});
 	table_str += "</table>";
+
+	chrome.identity.getAuthToken({"interactive": true}, function (token) {
+		if (token == null) {
+			console.log("its null");
+		} else {
+			console.log(token);
+		}
+	})
+
+
 }
 
 document.addEventListener('DOMContentLoaded', function () {
