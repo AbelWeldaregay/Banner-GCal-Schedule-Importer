@@ -159,7 +159,7 @@ function importEvents(calId, token, courseEventInfo, semEndDate) {
     var endDate = (new Date(course.meeting_window[0]));
     endDate.setHours(course.meeting_times[1].substring(0, 2));
     endDate.setMinutes(course.meeting_times[1].substring(3, 5));
-    if (parseInt(endDate.getHours()) < 12) {
+    if ( parseInt(endDate.getHours()) < 12) {
       endDate.setHours(endDate.getHours() + 12);
     }
 
@@ -168,11 +168,11 @@ function importEvents(calId, token, courseEventInfo, semEndDate) {
       "location": course.meeting_building ,
       "description": "CRN: " + course.course_crn,
       "start": {
-        "dateTime": startDate.toJSON(),
+        "dateTime": course.startDate.toJSON(),
         "timeZone": "America/New_York"
       },
       "end": {
-        "dateTime": endDate.toJSON(),
+        "dateTime": course.endDate.toJSON(),
         "timeZone": "America/New_York"
       },
       "recurrence": [
