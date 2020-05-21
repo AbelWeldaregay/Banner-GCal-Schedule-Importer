@@ -5,6 +5,7 @@ function extract_schedule() {
 	var child_divs = schedule_wrappers.getElementsByTagName("div")[0].getElementsByClassName("listViewWrapper");
 	var selected_semester = document.getElementsByClassName("select2-hidden-accessible")[0].innerHTML;
 	var schedule = [];
+	var table = [];
 	// var meeting_info = child_divs.scheduleListView.getElementsByClassName("listViewMeetingInformation");
 	for (var i = 0; i < child_divs.length; ++i) {
 		if (meeting_days === "None") {
@@ -76,9 +77,29 @@ function extract_schedule() {
 				});
 
 			}
+
+			table.push({
+				 "course_title"	   : child_divs[i].getElementsByClassName("list-view-course-title")[0].innerText,
+				 "instructor_name" : child_divs[i].getElementsByClassName("listViewInstructorInformation")[0].innerText.split("\n")[0].split(":")[1],
+				 "course_crn"      : child_divs[i].getElementsByClassName("listViewInstructorInformation")[0].innerText.split("\n")[1].split(":")[1],
+	 			 "meeting_window"  : child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].getElementsByTagName("span")[0].innerText.replace(/\s/g,'').split("--"),
+				 "startDate"	   : classStartDate,
+				 "endDate"		   : classEndDate,
+				 "meeting_days"    : child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].getElementsByClassName("ui-pillbox-summary")[0].innerText.split(","),
+				 "meeting_times"   : child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].getElementsByTagName("span")[2].innerText.replace(/\s/g,'').split("-"),
+				 "meeting_building": child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].innerText.split(":")[5].replace("Room",""),
+				 "meeting_room"    : child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].innerText.split(":")[6],
+				 "course_type"	   : "In-Person",
+				 "selected_semester": selected_semester
+			});
+
+
 		}
 		chrome.storage.local.set({"schedule": schedule}, function() {
 	   		console.log("course schedule value set");
+	   	});
+		chrome.storage.local.set({"table": table}, function() {
+	   		console.log("course table value set");
 	   	});
 		console.log("i : " + i  + "length: " + child_divs.length - 1);
 	   	if (i == child_divs.length - 1) {

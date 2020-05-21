@@ -37,38 +37,41 @@ function update_table() {
 	// opens a communication between scripts
 	document.getElementById("banner-example-image").style.display = "none";
 	courseEventInfo = null;
-	chrome.storage.local.get("schedule", function(schedule) {
-		courseEventInfo = schedule["schedule"];		
+	chrome.storage.local.get("table", function(table) {
+		courseEventInfo = table["table"];		
 		const semFirstDate = courseEventInfo[0].meeting_window[0];
 		const semLastDate = courseEventInfo[0].meeting_window[1];
-		for (var i = 0; i < schedule["schedule"].length; ++i) {
+		for (var i = 0; i < table["table"].length; ++i) {
 	   		table_str += "<tr>";
-	   		table_str += "<td>"+schedule["schedule"][i]["course_title"]+ "(CRN: " + schedule["schedule"][i]["course_crn"] + ")" + "</td>";
+	   		table_str += "<td>"+table["table"][i]["course_title"]+ "(CRN: " + table["table"][i]["course_crn"] + ")" + "</td>";
 	   		table_str += "</br>";
 	   		
-	   		if (schedule["schedule"][i]["meeting_times"] === "Online") {
+	   		if (table["table"][i]["meeting_times"] === "Online") {
 	   			table_str += "Online"
 	   		} else {
-	   			table_str += "<td>" + schedule["schedule"][i]["meeting_building"] + " "+ schedule["schedule"][i]["meeting_room"] + "</td>";
+	   			table_str += "<td>" + table["table"][i]["meeting_building"] + " "+ table["table"][i]["meeting_room"] + "</td>";
 		   		table_str += "</br>";
 		   		table_str += "<td>";
-		   		for (var j = 0; j < schedule["schedule"][i]["meeting_days"].length; ++j) {
-		   			table_str += schedule["schedule"][i]["meeting_days"][j] + ", ";
+		   		for (var j = 0; j < table["table"][i]["meeting_days"].length; ++j) {
+		   			table_str += table["table"][i]["meeting_days"][j] + ", ";
 		   		}
-	   			table_str += schedule["schedule"][i]["meeting_times"][0] + " to " + schedule["schedule"][i]["meeting_times"][1];
+	   			table_str += table["table"][i]["meeting_times"][0] + " to " + table["table"][i]["meeting_times"][1];
 	   		}			   		
 	   		table_str += "</tr>";
 	   		table_str += "</br>";
 	   		table_str += "</br>";
-			if (i == schedule["schedule"].length - 1) {
+			if (i == table["table"].length - 1) {
 	   			document.getElementById("schedule").innerHTML += table_str;
 			}
 		}
 
 	});
 	table_str += "</table>";
-
-	chrome.identity.getAuthToken({"interactive": true}, function (token) {
+	var schedule = [];
+	chrome.storage.local.get("schedule", function(schedule) {
+		schedule = schedule["schedule"];
+		
+		chrome.identity.getAuthToken({"interactive": true}, function (token) {
 		if (token == null) {
 			const authBtnEl = document.querySelector('#button-div');
 			console.log("direct google import not available");
@@ -85,13 +88,13 @@ function update_table() {
             //       getTokenAndXhr);
 
             // Initiate GCal scheduling functionality
-            importSchedule(courseEventInfo, courseEventInfo[0].selected_semester, courseEventInfo[0].meeting_window[1]);
+            importSchedule(schedule, schedule[0].selected_semester, schedule[0].meeting_window[1]);
           }, false);
 
 		}
-	})
+		})
 
-
+	});
 }
 
 function importSchedule(courseEventInfo, viewedSemester, semEndDate) {
