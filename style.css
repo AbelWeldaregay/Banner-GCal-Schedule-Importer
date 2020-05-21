@@ -1,9 +1,6 @@
 body {
   font-size: 100%;
-  width: 600px;
-  height: 600px;
-  background: #00325B;
-  color: white;
+  width: 350px;
 }
 #status {
   /* avoid an excessively wide status text */
@@ -12,3 +9,14 @@ body {
   overflow: hidden;
   max-width: 400px;
 }
+.nav {
+  background: #1abc9c;
+}
+/* Header/Logo Title */
+/*.nav {
+  padding: 15px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+  font-size: 24px;
+}*/

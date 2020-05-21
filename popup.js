@@ -1,7 +1,4 @@
-var importButtonHTML = '<button id="import-button" class="btn red accent-4">Import Schedule</button>';
-var authenticateButtonHTML = '<button id="authenticate-button" class="btn red accent-4" style="letter-spacing: 0px;">Allow Google Calendar Access</button>';
-var disabledAuthenticateButtonHTML = '<button id="authenticate-button" class="btn red accent-4" style="margin: 5px 0; letter-spacing: 0px;" disabled>Allow Google Calendar Access</button>';
-var testudoLinkButtonHTML = '<button id="testudo-link-button" class="btn red accent-4">Take me to Testudo!</button>';
+var importButtonHTML = '<button id="import-button" class="btn green accent-4">Import Schedule</button>';
 var exportToIcsButtonHTML = '<button id="export-ics-button" class="btn red accent-4" style="margin: 5px 0;letter-spacing: 0px;">Export schedule to .ics format</button>';
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
@@ -38,10 +35,13 @@ function update_table() {
 	document.getElementById("banner-example-image").style.display = "none";
 	courseEventInfo = null;
 	chrome.storage.local.get("table", function(table) {
-		courseEventInfo = table["table"];		
-		const semFirstDate = courseEventInfo[0].meeting_window[0];
-		const semLastDate = courseEventInfo[0].meeting_window[1];
+		courseEventInfo = table["table"];
+
+		// const semFirstDate = courseEventInfo[0].meeting_window[0];
+		// const semLastDate = courseEventInfo[0].meeting_window[1];
 		for (var i = 0; i < table["table"].length; ++i) {
+			if (table["table"][i]["meeting_times"] === "Online")
+				continue;
 	   		table_str += "<tr>";
 	   		table_str += "<td>"+table["table"][i]["course_title"]+ "(CRN: " + table["table"][i]["course_crn"] + ")" + "</td>";
 	   		table_str += "</br>";
@@ -151,6 +151,8 @@ function importEvents(calId, token, courseEventInfo, semEndDate) {
     var url = "https://www.googleapis.com/calendar/v3/calendars/" + calId + "/events";
 
     var course = courseEventInfo[i];
+    if (course.meeting_times === "Online")
+    	continue;
 	var semFirstDay = new Date(course.meeting_window[0]);
 	semFirstDay = semFirstDay.getDay();	
 	var classStartDay = 0;
