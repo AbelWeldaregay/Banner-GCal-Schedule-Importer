@@ -20,6 +20,7 @@ function extract_schedule() {
 				 "meeting_building" : "Online",
 				 "meeting_room"     : "Online",
 				 "course_type"	    : "Online",
+				 "meeting_day"		: "Online"
 			});
 		} else {
 			var meeting_days = child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].getElementsByClassName("ui-pillbox-summary")[0].innerText.split(",");
@@ -28,37 +29,37 @@ function extract_schedule() {
 			semFirstDay = semFirstDay.getDay();	
 			var classStartDay = 0;
 			var classStartDate = new Date(new Date(meeting_window[0]));
-			var classEndDate = new Date(new Date(meeting_window[1]));
+			var classEndDate = new Date(new Date(meeting_window[0]));
 			for (var k = 0; k < meeting_days.length; ++k) {
-				switch(meeting_days[k]) {
-					case "Monday":
-						classStartDay = 1;
-						break;
-					case "Tuesday":
-						classStartDay = 2;
-						break;
-					case "Wednesday":
-						classStartDay = 3;
-						break;
-					case "Thursday":
-						classStartDay = 4;
-						break;
-					case "Friday":
-						classStartDay = 5;
-						break;
-				}
+				// switch(meeting_days[k]) {
+				// 	case "Monday":
+				// 		classStartDay = 1;
+				// 		break;
+				// 	case "Tuesday":
+				// 		classStartDay = 2;
+				// 		break;
+				// 	case "Wednesday":
+				// 		classStartDay = 3;
+				// 		break;
+				// 	case "Thursday":
+				// 		classStartDay = 4;
+				// 		break;
+				// 	case "Friday":
+				// 		classStartDay = 5;
+				// 		break;
+				// }
 
-				var dayOffset = semFirstDay - classStartDay;
+				// var dayOffset = semFirstDay - classStartDay;
 				
-				if (dayOffset == 0) {	// class day is same as semester start day
-					//do nothing; the day is correct
-				} else if (dayOffset > 0) {	// class day is before semester start day (need to go to next week)
-					classStartDate.setDate(classStartDate.getDate() + 7 - dayOffset);
-					classEndDate.setDate(classEndDate.getDate() + 7 - dayOffset);
-				} else {
-					classStartDate.setDate(classStartDate.getDate() + Math.abs(dayOffset) );
-					classEndDate.setDate(classEndDate.getDate() + Math.abs(dayOffset) );
-				}
+				// if (dayOffset == 0) {	// class day is same as semester start day
+				// 	//do nothing; the day is correct
+				// } else if (dayOffset > 0) {	// class day is before semester start day (need to go to next week)
+				// 	classStartDate.setDate(classStartDate.getDate() + 7 - dayOffset);
+				// 	classEndDate.setDate(classEndDate.getDate() + 7 - dayOffset);
+				// } else {
+				// 	classStartDate.setDate(classStartDate.getDate() + Math.abs(dayOffset) );
+				// 	classEndDate.setDate(classEndDate.getDate() + Math.abs(dayOffset) );
+				// }
 
 			
 				schedule.push({
@@ -73,7 +74,8 @@ function extract_schedule() {
 					 "meeting_building": child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].innerText.split(":")[5].replace("Room",""),
 					 "meeting_room"    : child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].innerText.split(":")[6],
 					 "course_type"	   : "In-Person",
-					 "selected_semester": selected_semester
+					 "selected_semester": selected_semester,
+					 "meeting_day"		: meeting_days[k]
 				});
 
 			}

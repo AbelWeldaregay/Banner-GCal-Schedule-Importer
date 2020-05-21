@@ -151,19 +151,52 @@ function importEvents(calId, token, courseEventInfo, semEndDate) {
     var url = "https://www.googleapis.com/calendar/v3/calendars/" + calId + "/events";
 
     var course = courseEventInfo[i];
+	var semFirstDay = new Date(course.meeting_window[0]);
+	semFirstDay = semFirstDay.getDay();	
+	var classStartDay = 0;
+	var classStartDate = new Date(new Date(course.meeting_window[0]));
+	var classEndDate = new Date(new Date(course.meeting_window[0]));
+	switch(course.meeting_day) {
+		case "Monday":
+			classStartDay = 1;
+			break;
+		case "Tuesday":
+			classStartDay = 2;
+			break;
+		case "Wednesday":
+			classStartDay = 3;
+			break;
+		case "Thursday":
+			classStartDay = 4;
+			break;
+		case "Friday":
+			classStartDay = 5;
+			break;
+	}
+
+	var dayOffset = semFirstDay - classStartDay;
+	
+	if (dayOffset == 0) {	// class day is same as semester start day
+		//do nothing; the day is correct
+	} else if (dayOffset > 0) {	// class day is before semester start day (need to go to next week)
+		classStartDate.setDate(classStartDate.getDate() + 7 - dayOffset);
+		classEndDate.setDate(classEndDate.getDate() + 7 - dayOffset);
+	} else {
+		classStartDate.setDate(classStartDate.getDate() + Math.abs(dayOffset) );
+		classEndDate.setDate(classEndDate.getDate() + Math.abs(dayOffset) );
+	}
+	classStartDate.setHours(parseInt(course.meeting_times[0].match(/(\d+)/g)[0]));
+	classStartDate.setMinutes(parseInt(course.meeting_times[0].match(/(\d+)/g)[1]));
+
+	classEndDate.setHours(parseInt(course.meeting_times[1].match(/(\d+)/g)[0]));
+	classEndDate.setMinutes(parseInt(course.meeting_times[1].match(/(\d+)/g)[1]));
 
     // Set start/end dates taking into consideration am/pm
-    var startDate = (new Date(course.meeting_window[0]));
-    startDate.setHours(course.meeting_times[0].substring(0, 2));
-    startDate.setMinutes(course.meeting_times[0].substring(3, 5));
-    if (parseInt(startDate.getHours()) < 12) {
-      startDate.setHours(startDate.getHours() + 12);
+    if (parseInt(classStartDate.getHours()) < 12) {
+      classStartDate.setHours(classStartDate.getHours() + 12);
     }
-    var endDate = (new Date(course.meeting_window[0]));
-    endDate.setHours(course.meeting_times[1].substring(0, 2));
-    endDate.setMinutes(course.meeting_times[1].substring(3, 5));
-    if ( parseInt(endDate.getHours()) < 12) {
-      endDate.setHours(endDate.getHours() + 12);
+    if ( parseInt(classEndDate.getHours()) < 12) {
+      classEndDate.setHours(classEndDate.getHours() + 12);
     }
 
     var params = {
@@ -171,11 +204,11 @@ function importEvents(calId, token, courseEventInfo, semEndDate) {
       "location": course.meeting_building ,
       "description": "CRN: " + course.course_crn,
       "start": {
-        "dateTime": course.startDate,
+        "dateTime": classStartDate,
         "timeZone": "America/New_York"
       },
       "end": {
-        "dateTime": course.endDate,
+        "dateTime": classEndDate,
         "timeZone": "America/New_York"
       },
       "recurrence": [
