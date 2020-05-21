@@ -21,7 +21,7 @@ chrome.storage.local.get("prefs", function(data) {
 	   		});
 	   		// opens a communication between scripts
 	   		document.getElementById("banner-example-image").style.display = "none";
-	   		document.getElementById("redirect-button").textContent = "Import Schedule";
+	   		document.getElementById("redirect-button").remove();
 	   	} else {
 	   		document.getElementById("banner-example-image").style.display = "block";
 	   	}
@@ -168,11 +168,11 @@ function importEvents(calId, token, courseEventInfo, semEndDate) {
       "location": course.meeting_building ,
       "description": "CRN: " + course.course_crn,
       "start": {
-        "dateTime": course.startDate.toJSON(),
+        "dateTime": course.startDate,
         "timeZone": "America/New_York"
       },
       "end": {
-        "dateTime": course.endDate.toJSON(),
+        "dateTime": course.endDate,
         "timeZone": "America/New_York"
       },
       "recurrence": [
@@ -211,6 +211,7 @@ function postImportActions() {
 document.addEventListener('DOMContentLoaded', function () {
     var banner_btn = document.getElementById('redirect-button');
     banner_btn.addEventListener('click', function() {
+    	document.querySelector('#redirect-button').remove();
        chrome.storage.local.set({"prefs": "import"}, function() {
        		console.log("value set");
        });
