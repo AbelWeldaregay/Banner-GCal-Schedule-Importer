@@ -7,11 +7,33 @@ function extract_schedule() {
 	var schedule = [];
 	var table = [];
 	var course_names = document.getElementById("table1").getElementsByTagName("tr");
+	var schedule_details_not_selected = document.getElementById("scheduleCalViewLink").parentElement.className.split(' ').indexOf("ui-tabs-selected")>=0;
 	// var meeting_info = child_divs.scheduleListView.getElementsByClassName("listViewMeetingInformation");
-	for (var i = 0; i < child_divs.length; ++i) {
+	if (schedule_details_not_selected)
+	{
+	   	chrome.runtime.sendMessage({
+        data: "schedule_details_not_selected"
+    	}, function (response) {
+        	console.dir(response);
+	    });
+	} else {
+			for (var i = 0; i < child_divs.length; ++i) {
 		var meeting_days = child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].getElementsByClassName("ui-pillbox-summary")[0].innerText.split(",");
 		if (meeting_days[0] === "None") {
 			schedule.push({
+				 "course_title"	    : course_names[i+1].getElementsByTagName("td")[1].innerText.substring(0, course_names[i+1].getElementsByTagName("td")[1].innerText.indexOf(",")),
+				 "instructor_name"  : child_divs[i].getElementsByClassName("listViewInstructorInformation")[0].innerText.split("\n")[0].split(":")[1],
+				 "course_crn"       : child_divs[i].getElementsByClassName("listViewInstructorInformation")[0].innerText.split("\n")[1].split(":")[1],
+	 			 "meeting_window"   : child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].getElementsByTagName("span")[0].innerText.replace(/\s/g,'').split("--"),
+				 "selected_semester": selected_semester,
+				 "meeting_days"     : "Online",
+				 "meeting_times"    : "Online",
+				 "meeting_building" : "Online",
+				 "meeting_room"     : "Online",
+				 "course_type"	    : "Online",
+				 "meeting_day"		: "Online"
+			});
+			table.push({
 				 "course_title"	    : course_names[i+1].getElementsByTagName("td")[1].innerText.substring(0, course_names[i+1].getElementsByTagName("td")[1].innerText.indexOf(",")),
 				 "instructor_name"  : child_divs[i].getElementsByClassName("listViewInstructorInformation")[0].innerText.split("\n")[0].split(":")[1],
 				 "course_crn"       : child_divs[i].getElementsByClassName("listViewInstructorInformation")[0].innerText.split("\n")[1].split(":")[1],
@@ -79,4 +101,6 @@ function extract_schedule() {
     			    });
 	   	}
 	}
+	}
+
 }

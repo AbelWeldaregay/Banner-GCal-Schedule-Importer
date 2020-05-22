@@ -1,10 +1,16 @@
 var importButtonHTML = '<button id="import-button" class="btn green accent-4">Import Schedule</button>';
 var exportToIcsButtonHTML = '<button id="export-ics-button" class="btn red accent-4" style="margin: 5px 0;letter-spacing: 0px;">Export schedule to .ics format</button>';
+var banner_example_image = "<img id='banner-example-image' src='banner-example.png' style='width: 100%'>"
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-	update_table();
+	if (message["data"] === "schedule_details_not_selected") {
+   		document.getElementById("pagecodediv").innerHTML = "<br>You are almost there! Please select the <b>schedule details tab</b> as shown below:<br><br> <img id='banner-example-image' src='schedule_details.png' style='width: 100%'>";
+   		document.getElementById("banner-example-image").style.display = "block";
+	} else {
+		update_table();
+	}
     sendResponse({
-        data: "I am fine, thank you. How is life in the background?"
+        data: message
     }); 
 });
 chrome.storage.local.get("prefs", function(data) {
@@ -16,10 +22,10 @@ chrome.storage.local.get("prefs", function(data) {
 	   			"from": "popup",
 	   			"start": "scrap_web"
 	   		});
-	   		// opens a communication between scripts
-	   		document.getElementById("banner-example-image").style.display = "none";
+
 	   		document.getElementById("redirect-button").remove();
 	   	} else {
+	   		document.getElementById("pagecodediv").innerHTML = "Please navigate to the Banner Schedule Details page shown below: <b> <img id='banner-example-image' src='banner-example.png' style='width: 100%'>";
 	   		document.getElementById("banner-example-image").style.display = "block";
 	   	}
 	    // use `url` here inside the callback because it's asynchronous!
@@ -28,18 +34,15 @@ chrome.storage.local.get("prefs", function(data) {
 
 function update_table() {
 	var table_str = "";
-	
+	// document.getElementById("pagecodediv").innerHTML = "";
 	table_str += "<p>Here is what I found: </p>";
 	document.getElementById("schedule").innerHTML = "";
 	// opens a communication between scripts
-	document.getElementById("banner-example-image").style.display = "none";
+	// document.getElementById("banner-example-image").style.display = "none";
 	courseEventInfo = null;
 	chrome.storage.local.get("table", function(table) {
 		courseEventInfo = table["table"];
-
 		for (var i = 0; i < table["table"].length; ++i) {
-			if (table["table"][i]["meeting_times"] === "Online")
-				continue;
 	   		table_str += "<div>";
 	   		table_str += table["table"][i]["course_title"]+ " ( CRN: " + table["table"][i]["course_crn"] + " )";
 	   		table_str += "</br>";
@@ -135,12 +138,12 @@ function importSchedule(courseEventInfo, viewedSemester, semEndDate) {
       if (xhr.readyState == XMLHttpRequest.DONE) {
         if (xhr.status === 200) {
           var newCalId = (JSON.parse(xhr.responseText).id);
-          pagecodediv.innerText = 'Importing your schedule...';
+          pagecodediv.innerHTML = 'Importing your schedule...';
           document.querySelector('#import-button').remove();
           importEvents(newCalId, token, courseEventInfo, semEndDate);
         } else {
           console.log("Error", xhr.statusText);
-          pagecodediv.innerText = 'Uh Oh! Something went wrong...Sorry about the inconvenience! Feel free to shoot abelweldaregay@gmail.com an email so we know we\'re down!';
+          pagecodediv.innerHTML = 'Uh Oh! Something went wrong...Sorry about the inconvenience! Feel free to shoot abelweldaregay@gmail.com an email so we know we\'re down!';
           document.querySelector('#import-button').remove();
         }
       }
