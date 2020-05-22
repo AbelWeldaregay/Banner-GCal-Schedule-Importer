@@ -28,7 +28,7 @@ chrome.storage.local.get("prefs", function(data) {
 
 function update_table() {
 	var table_str = "";
-	table_str += "<table>";
+	
 	table_str += "<p>Here is what I found: </p>";
 	document.getElementById("schedule").innerHTML = "";
 	// opens a communication between scripts
@@ -37,28 +37,25 @@ function update_table() {
 	chrome.storage.local.get("table", function(table) {
 		courseEventInfo = table["table"];
 
-		// const semFirstDate = courseEventInfo[0].meeting_window[0];
-		// const semLastDate = courseEventInfo[0].meeting_window[1];
 		for (var i = 0; i < table["table"].length; ++i) {
 			if (table["table"][i]["meeting_times"] === "Online")
 				continue;
-	   		table_str += "<tr>";
-	   		table_str += "<td>"+table["table"][i]["course_title"]+ "(CRN: " + table["table"][i]["course_crn"] + ")" + "</td>";
+	   		table_str += "<div>";
+	   		table_str += table["table"][i]["course_title"]+ " ( CRN: " + table["table"][i]["course_crn"] + " )";
 	   		table_str += "</br>";
 	   		
 	   		if (table["table"][i]["meeting_times"] === "Online") {
 	   			table_str += "Online"
 	   		} else {
-	   			table_str += "<td>" + table["table"][i]["meeting_building"] + " "+ table["table"][i]["meeting_room"] + "</td>";
+	   			table_str +=  table["table"][i]["meeting_building"] + " "+ table["table"][i]["meeting_room"];
 		   		table_str += "</br>";
-		   		table_str += "<td>";
 		   		for (var j = 0; j < table["table"][i]["meeting_days"].length; ++j) {
 		   			table_str += table["table"][i]["meeting_days"][j] + ", ";
 		   		}
 	   			table_str += table["table"][i]["meeting_times"][0] + " to " + table["table"][i]["meeting_times"][1];
 	   		}			   		
-	   		table_str += "</tr>";
-	   		table_str += "</br>";
+	   		table_str += "</div>";
+	   		// table_str += "</br>";
 	   		table_str += "</br>";
 			if (i == table["table"].length - 1) {
 	   			document.getElementById("schedule").innerHTML += table_str;
@@ -66,7 +63,6 @@ function update_table() {
 		}
 
 	});
-	table_str += "</table>";
 	var schedule = [];
 	chrome.storage.local.get("schedule", function(schedule) {
 		schedule = schedule["schedule"];
@@ -81,13 +77,6 @@ function update_table() {
           var importScheduleButton = document.getElementById('import-button');
           importScheduleButton.addEventListener('click', function () {
             console.log("importScheduleButton has been clicked.");
-            //_gaq.push(['_trackEvent', 'importScheduleButton', 'clicked']);
-
-            // chrome.identity.removeCachedAuthToken(
-            //       { 'token': access_token },
-            //       getTokenAndXhr);
-
-            // Initiate GCal scheduling functionality
             importSchedule(schedule, schedule[0].selected_semester, schedule[0].meeting_window[1]);
           }, false);
 

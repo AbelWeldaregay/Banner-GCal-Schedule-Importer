@@ -6,12 +6,13 @@ function extract_schedule() {
 	var selected_semester = document.getElementsByClassName("select2-hidden-accessible")[0].innerHTML;
 	var schedule = [];
 	var table = [];
+	var course_names = document.getElementById("table1").getElementsByTagName("tr");
 	// var meeting_info = child_divs.scheduleListView.getElementsByClassName("listViewMeetingInformation");
 	for (var i = 0; i < child_divs.length; ++i) {
 		var meeting_days = child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].getElementsByClassName("ui-pillbox-summary")[0].innerText.split(",");
 		if (meeting_days[0] === "None") {
 			schedule.push({
-				 "course_title"	    : child_divs[i].getElementsByClassName("list-view-course-title")[0].innerText,
+				 "course_title"	    : course_names[i+1].getElementsByTagName("td")[1].innerText.substring(0, course_names[i+1].getElementsByTagName("td")[1].innerText.indexOf(",")),
 				 "instructor_name"  : child_divs[i].getElementsByClassName("listViewInstructorInformation")[0].innerText.split("\n")[0].split(":")[1],
 				 "course_crn"       : child_divs[i].getElementsByClassName("listViewInstructorInformation")[0].innerText.split("\n")[1].split(":")[1],
 	 			 "meeting_window"   : child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].getElementsByTagName("span")[0].innerText.replace(/\s/g,'').split("--"),
@@ -33,7 +34,7 @@ function extract_schedule() {
 			for (var k = 0; k < meeting_days.length; ++k) {
 			
 				schedule.push({
-					 "course_title"	   : child_divs[i].getElementsByClassName("list-view-course-title")[0].innerText,
+					 "course_title"	   : course_names[i+1].getElementsByTagName("td")[1].innerText.substring(0, course_names[i+1].getElementsByTagName("td")[1].innerText.indexOf(",")),
 					 "instructor_name" : child_divs[i].getElementsByClassName("listViewInstructorInformation")[0].innerText.split("\n")[0].split(":")[1],
 					 "course_crn"      : child_divs[i].getElementsByClassName("listViewInstructorInformation")[0].innerText.split("\n")[1].split(":")[1],
 		 			 "meeting_window"  : child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].getElementsByTagName("span")[0].innerText.replace(/\s/g,'').split("--"),
@@ -49,7 +50,7 @@ function extract_schedule() {
 			}
 
 			table.push({
-				 "course_title"	   : child_divs[i].getElementsByClassName("list-view-course-title")[0].innerText,
+				 "course_title"	   : course_names[i+1].getElementsByTagName("td")[1].innerText.substring(0, course_names[i+1].getElementsByTagName("td")[1].innerText.indexOf(",")),
 				 "instructor_name" : child_divs[i].getElementsByClassName("listViewInstructorInformation")[0].innerText.split("\n")[0].split(":")[1],
 				 "course_crn"      : child_divs[i].getElementsByClassName("listViewInstructorInformation")[0].innerText.split("\n")[1].split(":")[1],
 	 			 "meeting_window"  : child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].getElementsByTagName("span")[0].innerText.replace(/\s/g,'').split("--"),
