@@ -50,7 +50,31 @@ function update_table() {
 	   			table_str +=  table["table"][i]["meeting_building"] + " "+ table["table"][i]["meeting_room"];
 		   		table_str += "</br>";
 		   		for (var j = 0; j < table["table"][i]["meeting_days"].length; ++j) {
-		   			table_str += table["table"][i]["meeting_days"][j] + ", ";
+		   			
+		   			switch(table["table"][i]["meeting_days"][j]) {
+		   				case "Monday":
+		   					table_str += "Mon, ";
+		   					break;
+		   				case "Tuesday":
+		   					table_str += "Tues, ";
+		   					break;
+		   				case "Wednesday":
+		   					table_str += "Wed, ";
+		   					break;
+		   				case "Thursday":
+		   					table_str += "Thurs, ";
+		   					break;
+		   				case "Friday":
+		   					table_str += "Fri, ";
+		   					break;
+		   				case "Saturday":
+		   					table_str += "Sat, ";
+		   					break;
+		   				case "Sunday":
+		   					table_str += "Sun, ";
+		   					break;
+		   			}
+		   			// table_str += table["table"][i]["meeting_days"][j] + ", ";
 		   		}
 	   			table_str += table["table"][i]["meeting_times"][0] + " to " + table["table"][i]["meeting_times"][1];
 	   		}			   		
