@@ -86,16 +86,13 @@ function extract_schedule() {
 
 
 		}
-		chrome.storage.local.set({"schedule": schedule}, function() {
-	   		console.log("course schedule value set");
-	   	});
 		chrome.storage.local.set({"table": table}, function() {
 	   		console.log("course table value set");
 	   	});
 		console.log("i : " + i  + "length: " + child_divs.length - 1);
 	   	if (i == child_divs.length - 1) {
 		   	chrome.runtime.sendMessage({
-                    data: "Hello popup, how are you"
+                    data: schedule
                 }, function (response) {
                     console.dir(response);
     			    });
