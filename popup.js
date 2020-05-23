@@ -137,6 +137,7 @@ function authenticate() {
 function importSchedule(courseEventInfo, viewedSemester, semEndDate) {
   document.querySelector('#import-button').className += " disabled";
   var pagecodediv = document.querySelector('#pagecodediv');
+  pagecodediv.innerHTML = 'Importing your schedule...';
   chrome.identity.getAuthToken({
     'interactive': true
   }, function (token) {
@@ -159,7 +160,6 @@ function importSchedule(courseEventInfo, viewedSemester, semEndDate) {
       if (xhr.readyState == XMLHttpRequest.DONE) {
         if (xhr.status === 200) {
           var newCalId = (JSON.parse(xhr.responseText).id);
-          pagecodediv.innerHTML = 'Importing your schedule...';
           document.querySelector('#import-button').remove();
           importEvents(newCalId, token, courseEventInfo, semEndDate);
         } else {
