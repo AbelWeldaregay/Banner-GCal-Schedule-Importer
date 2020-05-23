@@ -59,36 +59,8 @@ function update_table() {
 		        }, false);
 
 			}
-		  //       var importScheduleButton = document.getElementById('import-button');
-		  //       importScheduleButton.addEventListener('click', function () {
-	   //        	console.log("importScheduleButton has been clicked.");
-	   //       		importSchedule(schedule, schedule[0].selected_semester, schedule[0].meeting_window[1]);
-		  //       }, false);
 			
 		});
-		// chrome.identity.getAuthToken({"interactive": false}, function (token) {
-		// if (token == null) {
-		// 	const authBtnEl = document.querySelector('#button-div');
-		// 	console.log("direct google import not available");
-		// } else {
-  //         document.querySelector('#button-div').innerHTML = importButtonHTML;
-  //         // Add event listener for import schedule button
-  //          document.querySelector('#pagecodediv').innerHTML = "You've come to the correct page! Please authorize this chrome extension to import your schedule!<br/><br/>After authenticating, come back to this page and use the extension again! The \"Allow Access\" button will change to allow importing!<br/>";
-  //          document.querySelector('#pagecodediv').innerHTML += authenticateButtonHTML;
-
-  //          document.getElementById("authenticate-button").addEventListener("click", function() {
-	 //           // authenticate();		
-  //          }, false);
-
-
-  //         // var importScheduleButton = document.getElementById('import-button');
-  //         // importScheduleButton.addEventListener('click', function () {
-  //         //   console.log("importScheduleButton has been clicked.");
-  //         //   importSchedule(schedule, schedule[0].selected_semester, schedule[0].meeting_window[1]);
-  //         // }, false);
-
-		// }
-		// })
 
 	});
 
