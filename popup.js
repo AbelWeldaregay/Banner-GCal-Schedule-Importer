@@ -83,7 +83,7 @@ function update_table() {
 	   		if (table_info[i]["meeting_times"] === "Online") {
 	   			table_str += "Online"
 	   		} else {
-	   			table_str +=  table_info[i]["meeting_building"] + " "+ table_info[i]["meeting_room"];
+	   			table_str +=  table_info[i]["meeting_building"] + " " + table_info[i]["meeting_room"];
 		   		table_str += "</br>";
 		   		for (var j = 0; j < table_info[i]["meeting_days"].length; ++j) {
 		   			
@@ -139,6 +139,7 @@ function importSchedule(courseEventInfo, viewedSemester, semEndDate) {
   document.querySelector('#import-button').className += " disabled";
   var pagecodediv = document.querySelector('#pagecodediv');
   pagecodediv.innerHTML = 'Importing your schedule...';
+  
   chrome.identity.getAuthToken({
     'interactive': true
   }, function (token) {
@@ -241,8 +242,8 @@ function importEvents(calId, token, courseEventInfo, semEndDate) {
 
     var params = {
       "summary": course.course_title + " (" + course.course_type + ")",
-      "location": course.meeting_building ,
-      "description": "CRN: " + course.course_crn,
+      "location": course.meeting_building,
+      "description": "CRN: " + course.course_crn + ", " + " Room: " + course.meeting_room,
       "start": {
         "dateTime": classStartDate,
         "timeZone": "America/New_York"
