@@ -86,11 +86,10 @@ function extract_schedule() {
 
 
 		}
-		chrome.storage.local.set({"table": table}, function() {
-	   		console.log("course table value set");
-	   	});
+
 		console.log("i : " + i  + "length: " + child_divs.length - 1);
 	   	if (i == child_divs.length - 1) {
+	   		schedule.push({"table_info": table});
 		   	chrome.runtime.sendMessage({
                     data: schedule
                 }, function (response) {
