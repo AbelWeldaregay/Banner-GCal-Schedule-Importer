@@ -3,14 +3,16 @@ var exportToIcsButtonHTML = '<button id="export-ics-button" class="btn red accen
 var banner_example_image = "<img id='banner-example-image' src='banner-example.png' style='width: 100%'>"
 var authenticateButtonHTML = '<button id="authenticate-button" class="btn red accent-4" style="letter-spacing: 0px;">Allow Google Calendar Access</button>';
 var courses = null;
+var table_info = null;
 // is_app_authorized();
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-	console.log(message);
 	if (message["data"] === "schedule_details_not_selected") {
    		document.getElementById("pagecodediv").innerHTML = "<br>You are almost there! Please select the <b>schedule details tab</b> as shown below:<br><br> <img id='banner-example-image' src='schedule_details.png' style='width: 100%'>";
    		document.getElementById("banner-example-image").style.display = "block";
 	} else {
-		courses = message;
+		table_info = message["data"][message["data"].length - 1].table_info;
+		delete message["data"][message["data"].length - 1].table_info;
+		courses = message["data"];
 		update_table();
 	}
     sendResponse({
@@ -51,7 +53,6 @@ function is_app_authorized() {
 
 
 function update_table() {
-	
 	if (is_app_authorized() === false) {
       	// Add event listener for import schedule button
        	document.querySelector('#pagecodediv').innerHTML = "</br>You've come to the correct page! Please authorize this chrome extension to import your schedule!<br/><br/>After authenticating, come back to this page and use the extension again! The \"Allow Access\" button will change to allow importing!<br/><br/>";
@@ -65,7 +66,7 @@ function update_table() {
         var importScheduleButton = document.getElementById('import-button');
         importScheduleButton.addEventListener('click', function () {
       		console.log("importScheduleButton has been clicked.");
-     		importSchedule(courses["data"], courses["data"][0].selected_semester, courses["data"][0].meeting_window[1]);
+     		importSchedule(courses, courses[0].selected_semester, courses[0].meeting_window[1]);
         }, false);
 
 	var table_str = "";
@@ -75,21 +76,20 @@ function update_table() {
 	// opens a communication between scripts
 	// document.getElementById("banner-example-image").style.display = "none";
 	courseEventInfo = null;
-	chrome.storage.local.get("table", function(table) {
-		courseEventInfo = table["table"];
-		for (var i = 0; i < table["table"].length; ++i) {
+
+	for (var i = 0; i < table_info.length; ++i) {
 	   		table_str += "<div>";
-	   		table_str += table["table"][i]["course_title"]+ " ( CRN: " + table["table"][i]["course_crn"] + " )";
+	   		table_str += table_info[i]["course_title"]+ " ( CRN: " + table_info[i]["course_crn"] + " )";
 	   		table_str += "</br>";
 	   		
-	   		if (table["table"][i]["meeting_times"] === "Online") {
+	   		if (table_info[i]["meeting_times"] === "Online") {
 	   			table_str += "Online"
 	   		} else {
-	   			table_str +=  table["table"][i]["meeting_building"] + " "+ table["table"][i]["meeting_room"];
+	   			table_str +=  table_info[i]["meeting_building"] + " "+ table_info[i]["meeting_room"];
 		   		table_str += "</br>";
-		   		for (var j = 0; j < table["table"][i]["meeting_days"].length; ++j) {
+		   		for (var j = 0; j < table_info[i]["meeting_days"].length; ++j) {
 		   			
-		   			switch(table["table"][i]["meeting_days"][j]) {
+		   			switch(table_info[i]["meeting_days"][j]) {
 		   				case "Monday":
 		   					table_str += "Mon, ";
 		   					break;
@@ -114,17 +114,15 @@ function update_table() {
 		   			}
 		   			// table_str += table["table"][i]["meeting_days"][j] + ", ";
 		   		}
-	   			table_str += table["table"][i]["meeting_times"][0] + " to " + table["table"][i]["meeting_times"][1];
+	   			table_str += table_info[i]["meeting_times"][0] + " to " + table_info[i]["meeting_times"][1];
 	   		}			   		
 	   		table_str += "</div>";
 	   		// table_str += "</br>";
 	   		table_str += "</br>";
-			if (i == table["table"].length - 1) {
+			if (i == table_info.length - 1) {
 	   			document.getElementById("schedule").innerHTML += table_str;
 			}
-		}
-
-	});
+	}
 }
 }
 
