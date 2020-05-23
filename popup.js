@@ -19,25 +19,23 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         data: message
     }); 
 });
-chrome.storage.local.get("prefs", function(data) {
-	chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
-	    let url = tabs[0].url;
-	   	if (data.prefs == "import" && url.indexOf("StudentRegistrationSsb") > -1) {
-	   		var port = chrome.runtime.connect();
-	   		port.postMessage({
-	   			"from": "popup",
-	   			"start": "scrap_web"
-	   		});
 
-	   		document.getElementById("redirect-button").remove();
-	   	} else {
-	   		document.getElementById("pagecodediv").innerHTML = "<p>Please navigate to the Banner Schedule Details page as shown below:</p> <b> <img id='banner-example-image' src='banner-example.png' style='width: 100%'> <br>";
-	   		document.getElementById("banner-example-image").style.display = "block";
-	   	}
-	    // use `url` here inside the callback because it's asynchronous!
-	});
+chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
+    let url = tabs[0].url;
+   	if (url.indexOf("StudentRegistrationSsb/ssb/registrationHistory/registrationHistory") > -1) {
+   		var port = chrome.runtime.connect();
+   		port.postMessage({
+   			"from": "popup",
+   			"start": "scrap_web"
+   		});
+
+   		document.getElementById("redirect-button").remove();
+   	} else {
+   		document.getElementById("pagecodediv").innerHTML = "<p>Please navigate to the Banner Schedule Details page as shown below:</p> <b> <img id='banner-example-image' src='banner-example.png' style='width: 100%'> <br>";
+   		document.getElementById("banner-example-image").style.display = "block";
+   	}
+    // use `url` here inside the callback because it's asynchronous!
 });
-
 
 function is_app_authorized() {
 	chrome.identity.getAuthToken({
@@ -290,8 +288,5 @@ document.addEventListener('DOMContentLoaded', function () {
     var banner_btn = document.getElementById('redirect-button');
     banner_btn.addEventListener('click', function() {
     	document.querySelector('#redirect-button').remove();
-       chrome.storage.local.set({"prefs": "import"}, function() {
-       		console.log("value set");
-       });
     });
 });
