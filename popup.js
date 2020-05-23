@@ -1,6 +1,7 @@
 var importButtonHTML = '<button id="import-button" class="btn green accent-4">Import Schedule</button>';
 var exportToIcsButtonHTML = '<button id="export-ics-button" class="btn red accent-4" style="margin: 5px 0;letter-spacing: 0px;">Export schedule to .ics format</button>';
 var banner_example_image = "<img id='banner-example-image' src='banner-example.png' style='width: 100%'>"
+var authenticateButtonHTML = '<button id="authenticate-button" class="btn red accent-4" style="letter-spacing: 0px;">Allow Google Calendar Access</button>';
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 	if (message["data"] === "schedule_details_not_selected") {
@@ -25,7 +26,7 @@ chrome.storage.local.get("prefs", function(data) {
 
 	   		document.getElementById("redirect-button").remove();
 	   	} else {
-	   		document.getElementById("pagecodediv").innerHTML = "Please navigate to the Banner Schedule Details page shown below: <b> <img id='banner-example-image' src='banner-example.png' style='width: 100%'>";
+	   		document.getElementById("pagecodediv").innerHTML = "<p>Please navigate to the Banner Schedule Details page as shown below:</p> <b> <img id='banner-example-image' src='banner-example.png' style='width: 100%'> <br>";
 	   		document.getElementById("banner-example-image").style.display = "block";
 	   	}
 	    // use `url` here inside the callback because it's asynchronous!
@@ -33,6 +34,64 @@ chrome.storage.local.get("prefs", function(data) {
 });
 
 function update_table() {
+	
+	var schedule = [];
+	chrome.storage.local.get("schedule", function(schedule) {
+		schedule = schedule["schedule"];
+		chrome.identity.getAuthToken({
+		    'interactive': false
+		  }, function (token) {
+			if (!token) {
+	          	// Add event listener for import schedule button
+	           	document.querySelector('#pagecodediv').innerHTML = "</br>You've come to the correct page! Please authorize this chrome extension to import your schedule!<br/><br/>After authenticating, come back to this page and use the extension again! The \"Allow Access\" button will change to allow importing!<br/><br/>";
+	           	document.querySelector('#pagecodediv').innerHTML += authenticateButtonHTML;
+
+	           	document.getElementById("authenticate-button").addEventListener("click", function() {
+		           authenticate();		
+	           }, false);
+					// authenticate();
+			} else {
+				document.querySelector('#button-div').innerHTML = importButtonHTML;
+		        var importScheduleButton = document.getElementById('import-button');
+		        importScheduleButton.addEventListener('click', function () {
+	          	console.log("importScheduleButton has been clicked.");
+	         		importSchedule(schedule, schedule[0].selected_semester, schedule[0].meeting_window[1]);
+		        }, false);
+
+			}
+		  //       var importScheduleButton = document.getElementById('import-button');
+		  //       importScheduleButton.addEventListener('click', function () {
+	   //        	console.log("importScheduleButton has been clicked.");
+	   //       		importSchedule(schedule, schedule[0].selected_semester, schedule[0].meeting_window[1]);
+		  //       }, false);
+			
+		});
+		// chrome.identity.getAuthToken({"interactive": false}, function (token) {
+		// if (token == null) {
+		// 	const authBtnEl = document.querySelector('#button-div');
+		// 	console.log("direct google import not available");
+		// } else {
+  //         document.querySelector('#button-div').innerHTML = importButtonHTML;
+  //         // Add event listener for import schedule button
+  //          document.querySelector('#pagecodediv').innerHTML = "You've come to the correct page! Please authorize this chrome extension to import your schedule!<br/><br/>After authenticating, come back to this page and use the extension again! The \"Allow Access\" button will change to allow importing!<br/>";
+  //          document.querySelector('#pagecodediv').innerHTML += authenticateButtonHTML;
+
+  //          document.getElementById("authenticate-button").addEventListener("click", function() {
+	 //           // authenticate();		
+  //          }, false);
+
+
+  //         // var importScheduleButton = document.getElementById('import-button');
+  //         // importScheduleButton.addEventListener('click', function () {
+  //         //   console.log("importScheduleButton has been clicked.");
+  //         //   importSchedule(schedule, schedule[0].selected_semester, schedule[0].meeting_window[1]);
+  //         // }, false);
+
+		// }
+		// })
+
+	});
+
 	var table_str = "";
 	// document.getElementById("pagecodediv").innerHTML = "";
 	table_str += "<p>Here is what I found: </p>";
@@ -90,27 +149,17 @@ function update_table() {
 		}
 
 	});
-	var schedule = [];
-	chrome.storage.local.get("schedule", function(schedule) {
-		schedule = schedule["schedule"];
-		
-		chrome.identity.getAuthToken({"interactive": true}, function (token) {
-		if (token == null) {
-			const authBtnEl = document.querySelector('#button-div');
-			console.log("direct google import not available");
-		} else {
-          document.querySelector('#button-div').innerHTML = importButtonHTML;
-          // Add event listener for import schedule button
-          var importScheduleButton = document.getElementById('import-button');
-          importScheduleButton.addEventListener('click', function () {
-            console.log("importScheduleButton has been clicked.");
-            importSchedule(schedule, schedule[0].selected_semester, schedule[0].meeting_window[1]);
-          }, false);
+}
 
-		}
-		})
-
-	});
+function authenticate() {
+  window.close();
+  // alert('After authenticating, come back to this page and use the extension again! The "Allow Access" button will change to allow importing!');
+  chrome.identity.getAuthToken({
+    'interactive': true
+  }, function (token) {
+    // Check the token.
+    console.log(token);
+  });
 }
 
 function importSchedule(courseEventInfo, viewedSemester, semEndDate) {
