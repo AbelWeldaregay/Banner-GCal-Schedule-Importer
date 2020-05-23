@@ -2,7 +2,7 @@ var importButtonHTML = '<button id="import-button" class="btn green accent-4">Im
 var exportToIcsButtonHTML = '<button id="export-ics-button" class="btn red accent-4" style="margin: 5px 0;letter-spacing: 0px;">Export schedule to .ics format</button>';
 var banner_example_image = "<img id='banner-example-image' src='banner-example.png' style='width: 100%'>"
 var authenticateButtonHTML = '<button id="authenticate-button" class="btn red accent-4" style="letter-spacing: 0px;">Allow Google Calendar Access</button>';
-
+// is_app_authorized();
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 	if (message["data"] === "schedule_details_not_selected") {
    		document.getElementById("pagecodediv").innerHTML = "<br>You are almost there! Please select the <b>schedule details tab</b> as shown below:<br><br> <img id='banner-example-image' src='schedule_details.png' style='width: 100%'>";
@@ -32,6 +32,20 @@ chrome.storage.local.get("prefs", function(data) {
 	    // use `url` here inside the callback because it's asynchronous!
 	});
 });
+
+
+function is_app_authorized() {
+	chrome.identity.getAuthToken({
+		"interactive": false
+	}, function(token) {
+		if (!token) {
+			return false;
+		} else {
+			return true;
+		}
+	});
+}
+
 
 function update_table() {
 	
@@ -231,10 +245,10 @@ function importEvents(calId, token, courseEventInfo, semEndDate) {
 	classEndDate.setMinutes(parseInt(course.meeting_times[1].match(/(\d+)/g)[1]));
 
     // Set start/end dates taking into consideration am/pm
-    if (parseInt(classStartDate.getHours()) < 12) {
+    if (parseInt(classStartDate.getHours()) < 12 && course.meeting_times[0].substr(-2) === "PM") {
       classStartDate.setHours(classStartDate.getHours() + 12);
     }
-    if ( parseInt(classEndDate.getHours()) < 12) {
+    if ( parseInt(classEndDate.getHours()) < 12 && course.meeting_times[0].substr(-2) === "PM") {
       classEndDate.setHours(classEndDate.getHours() + 12);
     }
 
