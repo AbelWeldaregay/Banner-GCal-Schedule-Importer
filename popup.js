@@ -139,7 +139,12 @@ function importSchedule(courseEventInfo, viewedSemester, semEndDate) {
   document.querySelector('#import-button').className += " disabled";
   var pagecodediv = document.querySelector('#pagecodediv');
   pagecodediv.innerHTML = 'Importing your schedule...';
-  
+  if (all_courses_online(courseEventInfo) === true)
+  {
+      pagecodediv.innerHTML = "<br>All of the courses for the selected semester are all online and do not have meeting times, Please select a semester that has at least one course with a meeting time and return to this page.";
+      document.querySelector('#import-button').remove();
+      return;
+  }
   chrome.identity.getAuthToken({
     'interactive': true
   }, function (token) {
@@ -176,6 +181,17 @@ function importSchedule(courseEventInfo, viewedSemester, semEndDate) {
   });
 }
 
+function all_courses_online(courseEventInfo) {
+	var all_courses_online = true;
+	for (var i = 0; i < courseEventInfo.length; i++) {
+		var course = courseEventInfo[i];
+		if (course.meeting_times === "Online" || course.meeting_times === undefined)
+			continue;
+		all_courses_online = false;
+	}
+
+	return all_courses_online;
+}
 
 function importEvents(calId, token, courseEventInfo, semEndDate) {
   var semEndDateParam = new Date(semEndDate);
@@ -183,15 +199,16 @@ function importEvents(calId, token, courseEventInfo, semEndDate) {
   semEndDateParam.setDate(semEndDateParam.getDate() + 1);
   semEndDateParamStr = semEndDateParam.toJSON().substr(0, 4) + semEndDateParam.toJSON().substr(5, 2) + semEndDateParam.toJSON().substr(8, 2);
   var postImportActionsCalled = false;
-
+  var all_courses_online = true;
 
   for (var i = 0; i < courseEventInfo.length; i++) {
     // POST request to create a new event
     var url = "https://www.googleapis.com/calendar/v3/calendars/" + calId + "/events";
 
     var course = courseEventInfo[i];
-    if (course.meeting_times === "Online")
+    if (course.meeting_times === "Online" || course.meeting_times === undefined)
     	continue;
+    all_courses_online = false;
 	var semFirstDay = new Date(course.meeting_window[0]);
 	semFirstDay = semFirstDay.getDay();	
 	var classStartDay = 0;
