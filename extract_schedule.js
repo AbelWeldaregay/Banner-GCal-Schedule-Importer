@@ -3,7 +3,7 @@ function extract_schedule() {
 	console.log("extract_schedule invoked");
 	var schedule_wrappers = document.getElementById("scheduleListViewWrapper");
 	var child_divs = schedule_wrappers.getElementsByTagName("div")[0].getElementsByClassName("listViewWrapper");
-	var selected_semester = document.getElementsByClassName("select2-hidden-accessible")[0].innerHTML;
+	var selected_semester = document.getElementsByClassName("select2-chosen")[0].innerText.trim();
 	var schedule = [];
 	var table = [];
 	var course_names = document.getElementById("table1").getElementsByTagName("tr");
