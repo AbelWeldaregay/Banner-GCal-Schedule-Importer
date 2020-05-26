@@ -77,6 +77,9 @@ function update_table() {
         }, false);
         exportToICSButton.addEventListener("click", function() {
         	console.log("exportToICSButton has been clicked");
+        	document.getElementById("export-ics-button").remove();
+        	document.getElementById("import-button").remove();
+        	document.getElementById("pagecodediv").innerHTML = "<br>Once it finishes downloading, <a target='_blank' href='https://calendar.google.com/calendar/r/settings/export'>upload it to Google or Microsoft Outlook Calendar yourself</a>! <br><br>Make sure to create a new empty calendar to upload to if you prefer your course schedule in its own separate calendar."
         	exportScheduleToIcs(courses, courses[0].selected_semester, courses[0].meeting_window[1]);
         }, false);
 
@@ -273,7 +276,13 @@ function exportScheduleToIcs(courseEventInfo, viewedSemester, semEndDate) {
 
 	classEndDate.setHours(parseInt(course.meeting_times[1].match(/(\d+)/g)[0]));
 	classEndDate.setMinutes(parseInt(course.meeting_times[1].match(/(\d+)/g)[1]));
-
+    // Set start/end dates taking into consideration am/pm
+    if (parseInt(classStartDate.getHours()) < 12 && course.meeting_times[0].substr(-2) === "PM") {
+      classStartDate.setHours(classStartDate.getHours() + 12);
+    }
+    if ( parseInt(classEndDate.getHours()) < 12 && course.meeting_times[0].substr(-2) === "PM") {
+      classEndDate.setHours(classEndDate.getHours() + 12);
+    }
     const summary = course.course_title + " (" + course.course_type + ")";
     const description = "CRN: " + course.course_crn + ", " + " Room: " + course.meeting_room;
     const location = course.meeting_building;
