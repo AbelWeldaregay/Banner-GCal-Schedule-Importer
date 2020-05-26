@@ -283,8 +283,8 @@ function exportScheduleToIcs(courseEventInfo, viewedSemester, semEndDate) {
     if ( parseInt(classEndDate.getHours()) < 12 && course.meeting_times[0].substr(-2) === "PM") {
       classEndDate.setHours(classEndDate.getHours() + 12);
     }
-    const summary = course.course_title + " (" + course.course_type + ")";
-    const description = "CRN: " + course.course_crn + ", " + " Room: " + course.meeting_room;
+    const summary = course.course_title;
+    const description = "CRN: " + course.course_crn + "<br>" + "Room: " + course.meeting_room + "<br>" + "Instructor: " + course.instructor_name;
     const location = course.meeting_building;
     const begin = classStartDate.toJSON();
     const end = classEndDate.toJSON();
@@ -360,9 +360,9 @@ function importEvents(calId, token, courseEventInfo, semEndDate) {
     }
 
     var params = {
-      "summary": course.course_title + " (" + course.course_type + ")",
+      "summary": course.course_title,
       "location": course.meeting_building,
-      "description": "CRN: " + course.course_crn + ", " + " Room: " + course.meeting_room,
+      "description": "CRN: " + course.course_crn + "<br>" + "Room: " + course.meeting_room + "Instructor: " + course.instructor_name,
       "start": {
         "dateTime": classStartDate,
         "timeZone": "America/New_York"
@@ -403,10 +403,3 @@ function postImportActions() {
 
   window.open('https://calendar.google.com/calendar/render#main_7%7Cmonth', '_blank');
 }
-
-// document.addEventListener('DOMContentLoaded', function () {
-//     var banner_btn = document.getElementById('redirect-button');
-//     banner_btn.addEventListener('click', function() {
-//     	document.querySelector('#redirect-button').remove();
-//     });
-// });
