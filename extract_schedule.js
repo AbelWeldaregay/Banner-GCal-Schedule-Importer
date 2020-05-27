@@ -27,12 +27,7 @@ function extract_schedule() {
 				 "course_crn"       : child_divs[i].getElementsByClassName("listViewInstructorInformation")[0].innerText.split("\n")[1].split(":")[1],
 	 			 "meeting_window"   : child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].getElementsByTagName("span")[0].innerText.replace(/\s/g,'').split("--"),
 				 "selected_semester": selected_semester,
-				 "meeting_days"     : "Online",
-				 "meeting_times"    : "Online",
-				 "meeting_building" : "Online",
-				 "meeting_room"     : "Online",
-				 "course_type"	    : "Online",
-				 "meeting_day"		: "Online"
+				 "meeting_times"    : "Online"
 			});
 		} else {
 			var meeting_window = child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].getElementsByTagName("span")[0].innerText.replace(/\s/g,'').split("--");
