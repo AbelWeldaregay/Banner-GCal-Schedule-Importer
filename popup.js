@@ -69,11 +69,9 @@ function update_table() {
         var importScheduleButton = document.getElementById('import-button');
         var exportToICSButton = document.getElementById("export-ics-button");
         importScheduleButton.addEventListener('click', function () {
-      		console.log("importScheduleButton has been clicked.");
      		importSchedule(courses, courses[0].selected_semester, courses[0].meeting_window[1]);
         }, false);
         exportToICSButton.addEventListener("click", function() {
-        	console.log("exportToICSButton has been clicked");
         	document.getElementById("export-ics-button").remove();
         	document.getElementById("import-button").remove();
         	document.getElementById("pagecodediv").innerHTML = "<br>Once it finishes downloading, <a target='_blank' href='https://calendar.google.com/calendar/r/settings/export'>upload it to Google or Microsoft Outlook Calendar yourself</a>! <br><br>Make sure to create a new empty calendar to upload to if you prefer your course schedule in its own separate calendar."
@@ -132,14 +130,10 @@ function update_table() {
 		   		}
 	   			table_str += courses[i]["meeting_times"][0] + " to " + courses[i]["meeting_times"][1];
 	   			// step_size += courses[i]["meeting_days"].length - 1;
-	   			console.log("step size: " + step_size);
 	   			i += courses[i]["meeting_days"].length - 1;
 		   		table_str += "</div>";
 	   			table_str += "</br>";
 	   		}			   		
-			// if (i == courses.length - 1) {
-	  //  			document.getElementById("schedule").innerHTML += table_str;
-			// }
 			i += 1;
 	}
 	document.getElementById("schedule").innerHTML += table_str;
@@ -391,7 +385,6 @@ function importEvents(calId, token, courseEventInfo, semEndDate) {
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState == XMLHttpRequest.DONE && !postImportActionsCalled) {
-        // console.log(JSON.parse(xhr.responseText));
         postImportActions();
         postImportActionsCalled = true;
       }
@@ -403,9 +396,5 @@ function importEvents(calId, token, courseEventInfo, semEndDate) {
 
 // After schedule has been imported
 function postImportActions() {
-  console.log("Finished importing courses");
-  console.log(pagecodediv);
-  // pagecodediv.innerText = 'Completed schedule import.';
-
   window.open('https://calendar.google.com/calendar/render#main_7%7Cmonth', '_blank');
 }
