@@ -3,7 +3,6 @@ var exportToIcsButtonHTML = '<button id="export-ics-button" class="btn red accen
 var banner_example_image = "<img id='banner-example-image' src='banner-example.png' style='width: 100%'>"
 var authenticateButtonHTML = '<button id="authenticate-button" class="btn red accent-4" style="letter-spacing: 0px;">Allow Google Calendar Access</button>';
 var courses = null;
-var table_info = null;
 // is_app_authorized();
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 
@@ -11,8 +10,6 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
    		document.getElementById("pagecodediv").innerHTML = "<br>You are almost there! Please select the <b>schedule details tab</b> as shown below:<br><br> <img id='banner-example-image' src='schedule_details.png' style='width: 100%'>";
    		document.getElementById("banner-example-image").style.display = "block";
 	} else {
-		table_info = message["data"][message["data"].length - 1].table_info;
-		delete message["data"][message["data"].length - 1].table_info;
 		courses = message["data"];
 		update_table();
 	}
@@ -89,21 +86,26 @@ function update_table() {
 	document.getElementById("schedule").innerHTML = "";
 	// opens a communication between scripts
 	// document.getElementById("banner-example-image").style.display = "none";
-	courseEventInfo = null;
-
-	for (var i = 0; i < table_info.length; ++i) {
+	var seen = [];
+	var step_size = 1;
+	var i = 0;
+	 while(i < courses.length){
 	   		table_str += "<div>";
-	   		table_str += table_info[i]["course_title"]+ " ( CRN: " + table_info[i]["course_crn"] + " )";
+	   		table_str += courses[i]["course_title"]+ " ( CRN: " + courses[i]["course_crn"] + " )";
 	   		table_str += "</br>";
 	   		
-	   		if (table_info[i]["meeting_times"] === "Online") {
-	   			table_str += "Online"
+	   		if (courses[i]["meeting_times"] === "Online") {
+	   			table_str += "Online";
+	   			i += 1;
+		   		table_str += "</div>";
+	   			table_str += "</br>";
+	   			continue;
 	   		} else {
-	   			table_str +=  table_info[i]["meeting_building"] + " " + table_info[i]["meeting_room"];
+	   			table_str +=  courses[i]["meeting_building"] + " " + courses[i]["meeting_room"];
 		   		table_str += "</br>";
-		   		for (var j = 0; j < table_info[i]["meeting_days"].length; ++j) {
+		   		for (var j = 0; j < courses[i]["meeting_days"].length; ++j) {
 		   			
-		   			switch(table_info[i]["meeting_days"][j]) {
+		   			switch(courses[i]["meeting_days"][j]) {
 		   				case "Monday":
 		   					table_str += "Mon, ";
 		   					break;
@@ -128,15 +130,19 @@ function update_table() {
 		   			}
 		   			// table_str += table["table"][i]["meeting_days"][j] + ", ";
 		   		}
-	   			table_str += table_info[i]["meeting_times"][0] + " to " + table_info[i]["meeting_times"][1];
+	   			table_str += courses[i]["meeting_times"][0] + " to " + courses[i]["meeting_times"][1];
+	   			// step_size += courses[i]["meeting_days"].length - 1;
+	   			console.log("step size: " + step_size);
+	   			i += courses[i]["meeting_days"].length - 1;
+		   		table_str += "</div>";
+	   			table_str += "</br>";
 	   		}			   		
-	   		table_str += "</div>";
-	   		// table_str += "</br>";
-	   		table_str += "</br>";
-			if (i == table_info.length - 1) {
-	   			document.getElementById("schedule").innerHTML += table_str;
-			}
+			// if (i == courses.length - 1) {
+	  //  			document.getElementById("schedule").innerHTML += table_str;
+			// }
+			i += 1;
 	}
+	document.getElementById("schedule").innerHTML += table_str;
 }
 }
 
@@ -365,11 +371,11 @@ function importEvents(calId, token, courseEventInfo, semEndDate) {
       "description": "CRN: " + course.course_crn + "<br>" + "Room: " + course.meeting_room + "Instructor: " + course.instructor_name,
       "start": {
         "dateTime": classStartDate,
-        "timeZone": "America/New_York"
+        "timeZone": "GMT"
       },
       "end": {
         "dateTime": classEndDate,
-        "timeZone": "America/New_York"
+        "timeZone": "GMT"
       },
       "recurrence": [
         "RRULE:FREQ=WEEKLY;UNTIL=" + semEndDateParamStr

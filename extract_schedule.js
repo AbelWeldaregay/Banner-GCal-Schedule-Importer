@@ -34,19 +34,6 @@ function extract_schedule() {
 				 "course_type"	    : "Online",
 				 "meeting_day"		: "Online"
 			});
-			table.push({
-				 "course_title"	    : course_names[i+1].getElementsByTagName("td")[1].innerText.substring(0, course_names[i+1].getElementsByTagName("td")[1].innerText.indexOf(",")),
-				 "instructor_name"  : child_divs[i].getElementsByClassName("listViewInstructorInformation")[0].innerText.split("\n")[0].split(":")[1],
-				 "course_crn"       : child_divs[i].getElementsByClassName("listViewInstructorInformation")[0].innerText.split("\n")[1].split(":")[1],
-	 			 "meeting_window"   : child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].getElementsByTagName("span")[0].innerText.replace(/\s/g,'').split("--"),
-				 "selected_semester": selected_semester,
-				 "meeting_days"     : "Online",
-				 "meeting_times"    : "Online",
-				 "meeting_building" : "Online",
-				 "meeting_room"     : "Online",
-				 "course_type"	    : "Online",
-				 "meeting_day"		: "Online"
-			});
 		} else {
 			var meeting_window = child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].getElementsByTagName("span")[0].innerText.replace(/\s/g,'').split("--");
 			var semFirstDay = new Date(meeting_window[0]);
@@ -74,18 +61,6 @@ function extract_schedule() {
 							 "meeting_day"		: meeting_days[j]
 						});
 					}
-						table.push({
-							 "course_title"	   : course_names[i+1].getElementsByTagName("td")[1].innerText.substring(0, course_names[i+1].getElementsByTagName("td")[1].innerText.indexOf(",")),
-							 "instructor_name" : child_divs[i].getElementsByClassName("listViewInstructorInformation")[0].innerText.split("\n")[0].split(":")[1],
-							 "course_crn"      : child_divs[i].getElementsByClassName("listViewInstructorInformation")[0].innerText.split("\n")[1].split(":")[1],
-				 			 "meeting_window"  : child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].getElementsByTagName("span")[0].innerText.replace(/\s/g,'').split("--"),
-							 "meeting_days"    : meeting_days,
-							 "meeting_times"   : child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].getElementsByTagName("span")[2].innerText.replace(/\s/g,'').split("-"),
-							 "meeting_building": child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].innerText.split(":")[5].replace("Room",""),
-							 "meeting_room"    : meeting_room,
-							 "course_type"	   : "In-Person",
-							 "selected_semester": selected_semester
-						});
 				}
 			} else {
 				for (var k = 0; k < meeting_days.length; ++k) {
@@ -105,26 +80,10 @@ function extract_schedule() {
 					});
 
 				}
-
-				table.push({
-					 "course_title"	   : course_names[i+1].getElementsByTagName("td")[1].innerText.substring(0, course_names[i+1].getElementsByTagName("td")[1].innerText.indexOf(",")),
-					 "instructor_name" : child_divs[i].getElementsByClassName("listViewInstructorInformation")[0].innerText.split("\n")[0].split(":")[1],
-					 "course_crn"      : child_divs[i].getElementsByClassName("listViewInstructorInformation")[0].innerText.split("\n")[1].split(":")[1],
-		 			 "meeting_window"  : child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].getElementsByTagName("span")[0].innerText.replace(/\s/g,'').split("--"),
-					 "meeting_days"    : child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].getElementsByClassName("ui-pillbox-summary")[0].innerText.split(","),
-					 "meeting_times"   : child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].getElementsByTagName("span")[2].innerText.replace(/\s/g,'').split("-"),
-					 "meeting_building": child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].innerText.split(":")[5].replace("Room",""),
-					 "meeting_room"    : child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].innerText.split(":")[6],
-					 "course_type"	   : "In-Person",
-					 "selected_semester": selected_semester
-				});
 			}
 
 		}
-
-		console.log("i : " + i  + "length: " + child_divs.length - 1);
 	   	if (i == child_divs.length - 1) {
-	   		schedule.push({"table_info": table});
 		   	chrome.runtime.sendMessage({
                     data: schedule
                 }, function (response) {
