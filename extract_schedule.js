@@ -54,7 +54,8 @@ function extract_schedule() {
 								 "meeting_room"     : meeting_room,
 								 "course_type"	    : "In-Person",
 								 "selected_semester": selected_semester,
-								 "meeting_day"		: meeting_days[j]
+								 "meeting_day"		: meeting_days[j],
+								 "group"			: i,
 							});
 						}
 					}
@@ -62,17 +63,18 @@ function extract_schedule() {
 					for (var k = 0; k < meeting_days.length; ++k) {
 				
 						schedule.push({
-							 "course_title"	   : course_title,
-							 "instructor_name" : instructor_name,
-							 "course_crn"      : course_crn,
-				 			 "meeting_window"  : meeting_window,
-							 "meeting_days"    : meeting_days,
-							 "meeting_times"   : meeting_times,
-							 "meeting_building": meeting_building,
-							 "meeting_room"    : child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].innerText.split(":")[6],
-							 "course_type"	   : "In-Person",
+							 "course_title"	    : course_title,
+							 "instructor_name"  : instructor_name,
+							 "course_crn"       : course_crn,
+				 			 "meeting_window"   : meeting_window,
+							 "meeting_days"     : meeting_days,
+							 "meeting_times"    : meeting_times,
+							 "meeting_building" : meeting_building,
+							 "meeting_room"     : child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].innerText.split(":")[6],
+							 "course_type"	    : "In-Person",
 							 "selected_semester": selected_semester,
-							 "meeting_day"		: meeting_days[k]
+							 "meeting_day"		: meeting_days[k],
+							 "group"			: i
 						});
 
 					}

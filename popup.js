@@ -325,18 +325,19 @@ async function importEvents(calId, token, courseEventInfo, semEndDate) {
 	var classEndDate = new Date(new Date(course.meeting_window[0]));
  	
  	await adjust_datetime(course, classStartDate, classEndDate);
-    
+
     var params = {
       "summary": course.course_title,
       "location": course.meeting_building,
       "description": "CRN: " + course.course_crn + "<br>" + "Room: " + course.meeting_room + "Instructor: " + course.instructor_name,
+      "colorId"	: course.group,
       "start": {
-        "dateTime": classStartDate,
-        "timeZone": "GMT"
+        "dateTime": classStartDate.toJSON(),
+        "timeZone": "America/New_York"
       },
       "end": {
-        "dateTime": classEndDate,
-        "timeZone": "GMT"
+        "dateTime": classEndDate.toJSON(),
+        "timeZone": "America/New_York"
       },
       "recurrence": [
         "RRULE:FREQ=WEEKLY;UNTIL=" + semEndDateParamStr

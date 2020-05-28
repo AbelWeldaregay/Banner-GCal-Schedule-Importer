@@ -101,7 +101,7 @@ function listUpcomingEvents() {
 function createCalendar() {
   console.log("In createCalendar()");
   var request = gapi.client.calendar.calendars.insert({
-    'summary': 'UMD Schedule',
+    'summary': 'ODU Schedule',
     'timezone': 'America/New_York'
   });
   
