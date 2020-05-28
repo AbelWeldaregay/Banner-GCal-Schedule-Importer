@@ -220,7 +220,7 @@ function all_courses_online(courseEventInfo) {
  * @param {*} viewedSemeseter
  * @param {*} semEndDate
  */
-function exportScheduleToIcs(courseEventInfo, viewedSemester, semEndDate) {
+async function exportScheduleToIcs(courseEventInfo, viewedSemester, semEndDate) {
   // Initialize ics.js
   var cal = ics();
 
@@ -237,52 +237,11 @@ function exportScheduleToIcs(courseEventInfo, viewedSemester, semEndDate) {
     var course = courseEventInfo[i];
     if (course.meeting_times === "Online" || course.meeting_times === undefined)
     	continue;
-	var semFirstDay = new Date(course.meeting_window[0]);
-	semFirstDay = semFirstDay.getDay();	
-	var classStartDay = 0;
 	var classStartDate = new Date(new Date(course.meeting_window[0]));
 	var classEndDate = new Date(new Date(course.meeting_window[0]));
-	switch(course.meeting_day) {
-		case "Monday":
-			classStartDay = 1;
-			break;
-		case "Tuesday":
-			classStartDay = 2;
-			break;
-		case "Wednesday":
-			classStartDay = 3;
-			break;
-		case "Thursday":
-			classStartDay = 4;
-			break;
-		case "Friday":
-			classStartDay = 5;
-			break;
-	}
-
-	var dayOffset = semFirstDay - classStartDay;
 	
-	if (dayOffset == 0) {	// class day is same as semester start day
-		//do nothing; the day is correct
-	} else if (dayOffset > 0) {	// class day is before semester start day (need to go to next week)
-		classStartDate.setDate(classStartDate.getDate() + 7 - dayOffset);
-		classEndDate.setDate(classEndDate.getDate() + 7 - dayOffset);
-	} else {
-		classStartDate.setDate(classStartDate.getDate() + Math.abs(dayOffset) );
-		classEndDate.setDate(classEndDate.getDate() + Math.abs(dayOffset) );
-	}
-	classStartDate.setHours(parseInt(course.meeting_times[0].match(/(\d+)/g)[0]));
-	classStartDate.setMinutes(parseInt(course.meeting_times[0].match(/(\d+)/g)[1]));
-
-	classEndDate.setHours(parseInt(course.meeting_times[1].match(/(\d+)/g)[0]));
-	classEndDate.setMinutes(parseInt(course.meeting_times[1].match(/(\d+)/g)[1]));
-    // Set start/end dates taking into consideration am/pm
-    if (parseInt(classStartDate.getHours()) < 12 && course.meeting_times[0].substr(-2) === "PM") {
-      classStartDate.setHours(classStartDate.getHours() + 12);
-    }
-    if ( parseInt(classEndDate.getHours()) < 12 && course.meeting_times[0].substr(-2) === "PM") {
-      classEndDate.setHours(classEndDate.getHours() + 12);
-    }
+	await adjust_datetime(course, classStartDate, classEndDate);
+	
     const summary = course.course_title;
     const description = "CRN: " + course.course_crn + "<br>" + "Room: " + course.meeting_room + "<br>" + "Instructor: " + course.instructor_name;
     const location = course.meeting_building;
@@ -295,27 +254,11 @@ function exportScheduleToIcs(courseEventInfo, viewedSemester, semEndDate) {
   cal.download(filename);
 }
 
-function importEvents(calId, token, courseEventInfo, semEndDate) {
-  var semEndDateParam = new Date(semEndDate);
-
-  semEndDateParam.setDate(semEndDateParam.getDate() + 1);
-  semEndDateParamStr = semEndDateParam.toJSON().substr(0, 4) + semEndDateParam.toJSON().substr(5, 2) + semEndDateParam.toJSON().substr(8, 2);
-  var postImportActionsCalled = false;
-  var all_courses_online = true;
-
-  for (var i = 0; i < courseEventInfo.length; i++) {
-    // POST request to create a new event
-    var url = "https://www.googleapis.com/calendar/v3/calendars/" + calId + "/events";
-
-    var course = courseEventInfo[i];
-    if (course.meeting_times === "Online" || course.meeting_times === undefined)
-    	continue;
-    all_courses_online = false;
+function adjust_datetime(course, classStartDate, classEndDate) {
 	var semFirstDay = new Date(course.meeting_window[0]);
 	semFirstDay = semFirstDay.getDay();	
 	var classStartDay = 0;
-	var classStartDate = new Date(new Date(course.meeting_window[0]));
-	var classEndDate = new Date(new Date(course.meeting_window[0]));
+
 	switch(course.meeting_day) {
 		case "Monday":
 			classStartDay = 1;
@@ -358,7 +301,31 @@ function importEvents(calId, token, courseEventInfo, semEndDate) {
     if ( parseInt(classEndDate.getHours()) < 12 && course.meeting_times[0].substr(-2) === "PM") {
       classEndDate.setHours(classEndDate.getHours() + 12);
     }
+}
 
+
+async function importEvents(calId, token, courseEventInfo, semEndDate) {
+  var semEndDateParam = new Date(semEndDate);
+
+  semEndDateParam.setDate(semEndDateParam.getDate() + 1);
+  semEndDateParamStr = semEndDateParam.toJSON().substr(0, 4) + semEndDateParam.toJSON().substr(5, 2) + semEndDateParam.toJSON().substr(8, 2);
+  var postImportActionsCalled = false;
+  var all_courses_online = true;
+
+  for (var i = 0; i < courseEventInfo.length; i++) {
+    // POST request to create a new event
+    var url = "https://www.googleapis.com/calendar/v3/calendars/" + calId + "/events";
+
+    var course = courseEventInfo[i];
+    
+    if (course.meeting_times === "Online" || course.meeting_times === undefined)
+    	continue;
+	
+	var classStartDate = new Date(new Date(course.meeting_window[0]));
+	var classEndDate = new Date(new Date(course.meeting_window[0]));
+ 	
+ 	await adjust_datetime(course, classStartDate, classEndDate);
+    
     var params = {
       "summary": course.course_title,
       "location": course.meeting_building,
