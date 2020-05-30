@@ -69,6 +69,7 @@ function update_table() {
         var importScheduleButton = document.getElementById('import-button');
         var exportToICSButton = document.getElementById("export-ics-button");
         importScheduleButton.addEventListener('click', function () {
+        	ga('_trackEvent', 'importButton', 'clicked');
      		importSchedule(courses, courses[0].selected_semester, courses[0].meeting_window[1]);
         }, false);
         exportToICSButton.addEventListener("click", function() {
