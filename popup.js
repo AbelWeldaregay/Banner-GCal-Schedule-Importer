@@ -45,6 +45,7 @@ function is_app_authorized() {
 	chrome.identity.getAuthToken({
 		"interactive": false
 	}, function(token) {
+		console.log("token: " + token);
 		if (!token) {
 			return false;
 		} else {
@@ -193,8 +194,8 @@ function importSchedule(courseEventInfo, viewedSemester, semEndDate) {
           console.log("Error", xhr.statusText);
           pagecodediv.innerHTML = 'Uh Oh! Something went wrong...Sorry about the inconvenience! Feel free to shoot abelweldaregay@gmail.com an email so we know we\'re down!<br>';
           pagecodediv.innerHTML += "In the meantime, you can export your schedule as a .ics file and <a href='https://calendar.google.com/calendar/r/settings/export'>upload it to Google Calendar yourself</a>! Make sure to create a new empty calendar to upload to if you prefer your course schedule in its own separate calendar.";
-          pagecodediv.innerHTML += "<br> " + exportToIcsButtonHTML;
-          document.querySelector('#import-button').remove();
+          document.querySelector('#export-ics-button').className = "btn accent-4";
+    
         }
       }
     }
