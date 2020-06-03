@@ -253,6 +253,7 @@ async function exportScheduleToIcs(courseEventInfo, viewedSemester, semEndDate) 
 
   const filename = viewedSemester;
   cal.download(filename);
+    ga("send", "event", "Export", "Click", "Export Schedule");
 }
 
 function adjust_datetime(course, classStartDate, classEndDate) {
