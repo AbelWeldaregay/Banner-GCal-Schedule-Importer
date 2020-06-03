@@ -365,5 +365,6 @@ async function importEvents(calId, token, courseEventInfo, semEndDate) {
 
 // After schedule has been imported
 function postImportActions() {
+  ga("send", "event", "Import", "Click", "Import Schedule");
   window.open('https://calendar.google.com/calendar/render#main_7%7Cmonth', '_blank');
 }
