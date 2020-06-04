@@ -76,7 +76,7 @@ function update_table() {
         exportToICSButton.addEventListener("click", function() {
         	document.getElementById("export-ics-button").remove();
         	document.getElementById("import-button").remove();
-        	document.getElementById("pagecodediv").innerHTML = "<br>Once it finishes downloading, <a target='_blank' href='https://calendar.google.com/calendar/r/settings/export'>upload it to Google or Microsoft Outlook Calendar yourself</a>! <br><br>Make sure to create a new empty calendar to upload to if you prefer your course schedule in its own separate calendar."
+        	document.getElementById("pagecodediv").innerHTML = "<br>Once it finishes downloading, upload it to <a target='_blank' href='https://calendar.google.com/calendar/r/settings/export'>Google calendar</a> or Microsoft Outlook Calendar yourself! </br></br>Make sure to create a new empty calendar to upload to if you prefer your course schedule in its own separate calendar."
         	exportScheduleToIcs(courses, courses[0].selected_semester, courses[0].meeting_window[1]);
         }, false);
 
