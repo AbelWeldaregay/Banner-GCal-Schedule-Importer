@@ -90,6 +90,7 @@ function update_table() {
 	var step_size = 1;
 	var i = 0;
 	 while(i < courses.length){
+			table_str += "<hr>";
 	   		table_str += "<div>";
 	   		table_str += courses[i]["course_title"]+ " ( CRN: " + courses[i]["course_crn"] + " )";
 	   		table_str += "</br>";
@@ -98,7 +99,6 @@ function update_table() {
 	   			table_str += "Online";
 	   			i += 1;
 		   		table_str += "</div>";
-	   			table_str += "</br>";
 	   			continue;
 	   		} else {
 	   			table_str +=  courses[i]["meeting_building"] + " " + courses[i]["meeting_room"];
@@ -134,10 +134,10 @@ function update_table() {
 	   			// step_size += courses[i]["meeting_days"].length - 1;
 	   			i += courses[i]["meeting_days"].length - 1;
 		   		table_str += "</div>";
-	   			table_str += "</br>";
-	   		}			   		
+			}			   		
 			i += 1;
 	}
+	table_str += "<hr>";
 	document.getElementById("schedule").innerHTML += table_str;
 }
 }
