@@ -21,6 +21,7 @@ function extract_schedule() {
 			course_crn = child_divs[i].getElementsByClassName("listViewInstructorInformation")[0].innerText.split("\n")[1].split(":")[1];
 			if (meeting_days[0] === "None") {
 				schedule.push({
+					 "id"				: uuidv4(),
 					 "course_title"	    : course_title,
 					 "instructor_name"  : instructor_name,
 					 "course_crn"       : course_crn,
@@ -44,6 +45,7 @@ function extract_schedule() {
 						var meeting_room = child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].innerHTML.split("<br>")[x].substr(-4).replace(/\D/g, "");
 						for (var j = 0; j < meeting_days.length; ++j) {
 							schedule.push({
+								 "id"				: uuidv4(),
 								 "course_title"	    : course_title,
 								 "instructor_name"  : instructor_name,
 								 "course_crn"       : course_crn,
@@ -63,6 +65,7 @@ function extract_schedule() {
 					for (var k = 0; k < meeting_days.length; ++k) {
 				
 						schedule.push({
+							 "id"				: uuidv4(),
 							 "course_title"	    : course_title,
 							 "instructor_name"  : instructor_name,
 							 "course_crn"       : course_crn,
@@ -92,3 +95,12 @@ function extract_schedule() {
 	}
 
 }
+/**
+ * RFC4122 version 4 compliant unique id generator
+ */
+function uuidv4() {
+	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+	  var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+	  return v.toString(16);
+	});
+  }
