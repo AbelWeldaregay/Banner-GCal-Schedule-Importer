@@ -1,4 +1,4 @@
-# Banner-Schedule-Importer
+# Banner-GCal-Schedule-Importer
 Chrome Extension that imports your class schedule directly into a new Google Calendar
 
 # Links
