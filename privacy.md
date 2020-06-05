@@ -1,7 +1,7 @@
-# Privacy Policy | Google-Cal-Schedule Importer
-- This page is used to inform website visitors regarding our policies with the collection, use, and disclosure of
-        Personal Information if anyone decided to use our Service, the ODU Schedule Importer website.
-- If you choose to use our Service, then you agree to the collection and use of information in relation with this
+# Privacy Policy
+This page is used to inform website visitors regarding our policies with the collection, use, and disclosure of
+        Personal Information if anyone decided to use our Service, the ODU Schedule Importer website. <br><br>
+If you choose to use our Service, then you agree to the collection and use of information in relation with this
         policy. The Personal Information that we collect are used for providing and improving the Service. We will not use
         or share your information with anyone except as described in this Privacy Policy.
 
@@ -16,12 +16,12 @@ We do NOT require you to provide us with any personally identifiable information
         and date of your visit, the time spent on those pages, and other statistics.
 
 ## Cookies
-    Cookies are files with small amount of data that is commonly used an anonymous unique identifier. These are sent to
+ Cookies are files with small amount of data that is commonly used an anonymous unique identifier. These are sent to
         your browser from the website that you visit and are stored on your computer’s hard drive.
-    <br>We do NOT use these "cookies" to collect information.
+    <br><br>We do NOT use these "cookies" to collect information.
 
 ## Service Providers
-    We will not employ third-party companies or individuals.
+We will not employ third-party companies or individuals.
 
 ## Security
  Our Service does request access to your Google Calendar in order to perform the Service of importing your course
@@ -41,5 +41,5 @@ Our Services do not address anyone under the age of 13. We do not collect person
         effective immediately, after they are posted on this page.
 
 ## Contact Me
-    <p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact me at <a
-        href="mailto:abelweldaregay@gmail.com">abelweldaregay@gmail.com</a>.</p>
+   If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact me at <a
+        href="mailto:abelweldaregay@gmail.com">abelweldaregay@gmail.com</a>.
