@@ -55,7 +55,8 @@ function is_app_authorized() {
 }
 
 
-function update_table() {
+async function update_table() {
+	console.log(courses);
 	if (is_app_authorized() === false) {
       	// Add event listener for import schedule button
        	document.querySelector('#pagecodediv').innerHTML = "</br>You've come to the correct page! Please authorize this chrome extension to import your schedule!<br/><br/>After authenticating, come back to this page and use the extension again! The \"Allow Access\" button will change to allow importing!<br/><br/>";
@@ -79,20 +80,35 @@ function update_table() {
         	document.getElementById("pagecodediv").innerHTML = "<br>Once it finishes downloading, upload it to <a target='_blank' href='https://calendar.google.com/calendar/r/settings/export'>Google calendar</a> or Microsoft Outlook Calendar yourself! </br></br>Make sure to create a new empty calendar to upload to if you prefer your course schedule in its own separate calendar."
         	exportScheduleToIcs(courses, courses[0].selected_semester, courses[0].meeting_window[1]);
         }, false);
+		
+		await build_preview();
+		var i = 0;
+		while (i < courses.length) {
+			document.getElementById(courses[i].id).addEventListener("click", function() {
+				console.log(this.id);
+				document.getElementById(this.id).remove();
+			});
+			i += courses[i]["meeting_days"].length;
+		}
 
+
+
+	}
+}
+
+function build_preview() {
 	var table_str = "";
 	// document.getElementById("pagecodediv").innerHTML = "";
 	table_str += "<p>Here is what I found: </p>";
 	document.getElementById("schedule").innerHTML = "";
 	// opens a communication between scripts
 	// document.getElementById("banner-example-image").style.display = "none";
-	var seen = [];
-	var step_size = 1;
 	var i = 0;
 	 while(i < courses.length){
-			table_str += "<hr>";
-	   		table_str += "<div>";
-	   		table_str += courses[i]["course_title"]+ " ( CRN: " + courses[i]["course_crn"] + " )";
+		
+	   		table_str += "<div id = '" + courses[i]["id"] + "'>";
+			table_str += "<hr>";   
+			table_str += courses[i]["course_title"]+ " ( CRN: " + courses[i]["course_crn"] + " )";
 	   		table_str += "</br>";
 	   		
 	   		if (courses[i]["meeting_times"] === "Online") {
@@ -102,8 +118,8 @@ function update_table() {
 	   			continue;
 	   		} else {
 				table_str +=  courses[i]["meeting_building"] + " " + courses[i]["meeting_room"];
-				table_str += '<i style="float: right;" class="fa fa-trash small"></i>';
-		   		table_str += "</br>";
+				table_str += '<i id = ' + courses[i]["id"] + ' value="' + courses[i]["id"] + '" style="float: right; color: red;" class="fa fa-trash small delete-course"></i>';
+				table_str += "</br>";
 		   		for (var j = 0; j < courses[i]["meeting_days"].length; ++j) {
 		   			
 		   			switch(courses[i]["meeting_days"][j]) {
@@ -134,13 +150,13 @@ function update_table() {
 	   			table_str += courses[i]["meeting_times"][0] + " to " + courses[i]["meeting_times"][1];
 	   			// step_size += courses[i]["meeting_days"].length - 1;
 				i += courses[i]["meeting_days"].length - 1;
-		   		table_str += "</div>";
+				
+				table_str += "</div>";
 			}			   		
 			i += 1;
 	}
 	table_str += "<hr>";
-	document.getElementById("schedule").innerHTML += table_str;
-}
+	document.getElementById("schedule").innerHTML = table_str;
 }
 
 function authenticate() {
@@ -256,6 +272,10 @@ async function exportScheduleToIcs(courseEventInfo, viewedSemester, semEndDate) 
   const filename = viewedSemester;
   cal.download(filename);
     ga("send", "event", "Export", "Click", "Export Schedule");
+}
+
+function delete_course(course_id) {
+	alert(course_id);
 }
 
 function adjust_datetime(course, classStartDate, classEndDate) {
