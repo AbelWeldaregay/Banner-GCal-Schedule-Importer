@@ -87,6 +87,7 @@ async function update_table() {
 			document.getElementById(courses[i].id).addEventListener("click", function() {
 				console.log(this.id);
 				document.getElementById(this.id).remove();
+				remove_course(this.id);
 			});
 			i += courses[i]["meeting_days"].length;
 		}
@@ -157,6 +158,12 @@ function build_preview() {
 	}
 	table_str += "<hr>";
 	document.getElementById("schedule").innerHTML = table_str;
+}
+
+function remove_course(id) {
+	courses = courses.filter(function(obj) {
+		return obj.id !== id;
+	});
 }
 
 function authenticate() {

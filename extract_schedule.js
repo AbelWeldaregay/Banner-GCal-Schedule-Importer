@@ -62,10 +62,11 @@ function extract_schedule() {
 						}
 					}
 				} else {
+					var id = uuidv4();
 					for (var k = 0; k < meeting_days.length; ++k) {
-				
+						
 						schedule.push({
-							 "id"				: uuidv4(),
+							 "id"				: id,
 							 "course_title"	    : course_title,
 							 "instructor_name"  : instructor_name,
 							 "course_crn"       : course_crn,
