@@ -164,6 +164,11 @@ function remove_course(id) {
 	courses = courses.filter(function(obj) {
 		return obj.id !== id;
 	});
+	if (courses.length <= 0) {
+		document.querySelector("#pagecodediv").innerHTML = "<br> There are no courses left to import/export, Please try again.";
+		document.querySelector('#import-button').remove();
+		document.querySelector('#export-ics-button').remove();
+	}
 }
 
 function authenticate() {
