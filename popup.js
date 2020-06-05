@@ -84,10 +84,11 @@ async function update_table() {
 		await build_preview();
 		var i = 0;
 		while (i < courses.length) {
-			document.getElementById(courses[i].id).addEventListener("click", function() {
+			document.getElementById(courses[i].id + "-button").addEventListener("click", function() {
 				console.log(this.id);
-				document.getElementById(this.id).remove();
-				remove_course(this.id);
+				var course_id = this.id.replace("-button", "");
+				document.getElementById(this.id.replace("-button", "")).remove();
+				remove_course(course_id);
 			});
 			i += courses[i]["meeting_days"].length;
 		}
@@ -119,7 +120,7 @@ function build_preview() {
 	   			continue;
 	   		} else {
 				table_str +=  courses[i]["meeting_building"] + " " + courses[i]["meeting_room"];
-				table_str += '<i id = ' + courses[i]["id"] + ' value="' + courses[i]["id"] + '" style="float: right; color: red;" class="fa fa-trash small delete-course"></i>';
+				table_str += '<i id = ' + courses[i]["id"] + "-button" + ' value="' + courses[i]["id"] + '" style="float: right; color: red;" class="fa fa-trash small delete-course"></i>';
 				table_str += "</br>";
 		   		for (var j = 0; j < courses[i]["meeting_days"].length; ++j) {
 		   			
