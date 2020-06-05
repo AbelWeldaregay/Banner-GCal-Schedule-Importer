@@ -43,9 +43,10 @@ function extract_schedule() {
 					for (var x = 0; x < sub_courses_length; ++x) {
 						var meeting_days = child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].getElementsByClassName("list-view-pillbox")[x].innerText.split("\n")[0].split(",");
 						var meeting_room = child_divs[i].getElementsByClassName("listViewMeetingInformation")[0].innerHTML.split("<br>")[x].substr(-4).replace(/\D/g, "");
+						var id = uuidv4();
 						for (var j = 0; j < meeting_days.length; ++j) {
 							schedule.push({
-								 "id"				: uuidv4(),
+								 "id"				: id,
 								 "course_title"	    : course_title,
 								 "instructor_name"  : instructor_name,
 								 "course_crn"       : course_crn,

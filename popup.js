@@ -90,7 +90,10 @@ async function update_table() {
 				document.getElementById(this.id.replace("-button", "")).remove();
 				remove_course(course_id);
 			});
-			i += courses[i]["meeting_days"].length;
+			if (courses[i]["meeting_days"] === undefined)
+				i += 1;
+			else
+				i += courses[i]["meeting_days"].length;
 		}
 
 
@@ -106,6 +109,7 @@ function build_preview() {
 	// opens a communication between scripts
 	// document.getElementById("banner-example-image").style.display = "none";
 	var i = 0;
+	var all_courses_online = true;
 	 while(i < courses.length){
 		
 	   		table_str += "<div id = '" + courses[i]["id"] + "'>";
@@ -114,11 +118,15 @@ function build_preview() {
 	   		table_str += "</br>";
 	   		
 	   		if (courses[i]["meeting_times"] === "Online") {
-	   			table_str += "Online";
+				table_str += "Online";
+				table_str += '<i id = ' + courses[i]["id"] + "-button" + ' value="' + courses[i]["id"] + '" style="float: right; color: red;" class="fa fa-trash small delete-course"></i>';
+				table_str += "<br>";
+				table_str += "<br>";
 	   			i += 1;
 		   		table_str += "</div>";
 	   			continue;
 	   		} else {
+				all_courses_online = false;
 				table_str +=  courses[i]["meeting_building"] + " " + courses[i]["meeting_room"];
 				table_str += '<i id = ' + courses[i]["id"] + "-button" + ' value="' + courses[i]["id"] + '" style="float: right; color: red;" class="fa fa-trash small delete-course"></i>';
 				table_str += "</br>";
@@ -158,7 +166,13 @@ function build_preview() {
 			i += 1;
 	}
 	table_str += "<hr>";
-	document.getElementById("schedule").innerHTML = table_str;
+	if (all_courses_online === true) {
+		document.querySelector("#pagecodediv").innerHTML = "<br> All of the courses for the selected semester are all online and do not have a meeting time.<br><br> Please select a different semester and return to this page to continue.";
+		document.querySelector('#import-button').remove();
+		document.querySelector('#export-ics-button').remove();
+	} else {
+		document.getElementById("schedule").innerHTML = table_str;
+	}
 }
 
 function remove_course(id) {
