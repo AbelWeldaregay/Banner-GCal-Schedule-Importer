@@ -12,3 +12,6 @@ body {
 .nav {
   background: dodgerblue;
 }
+i:hover {
+  cursor: pointer;
+}

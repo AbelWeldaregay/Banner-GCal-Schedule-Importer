@@ -101,7 +101,8 @@ function update_table() {
 		   		table_str += "</div>";
 	   			continue;
 	   		} else {
-	   			table_str +=  courses[i]["meeting_building"] + " " + courses[i]["meeting_room"];
+				table_str +=  courses[i]["meeting_building"] + " " + courses[i]["meeting_room"];
+				table_str += '<i style="float: right;" class="fa fa-trash small"></i>';
 		   		table_str += "</br>";
 		   		for (var j = 0; j < courses[i]["meeting_days"].length; ++j) {
 		   			
@@ -132,7 +133,7 @@ function update_table() {
 		   		}
 	   			table_str += courses[i]["meeting_times"][0] + " to " + courses[i]["meeting_times"][1];
 	   			// step_size += courses[i]["meeting_days"].length - 1;
-	   			i += courses[i]["meeting_days"].length - 1;
+				i += courses[i]["meeting_days"].length - 1;
 		   		table_str += "</div>";
 			}			   		
 			i += 1;
