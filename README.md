@@ -6,15 +6,15 @@ You can also export your class schedule as an .ics file and import it to google 
 
 After navigating to the scehdule details page, open the extension and click import!
 
-<img src="https://github.com/AbelWeldaregay/Banner-GCal-Schedule-Importer/blob/master/screenshots/import-preview.png?raw=true">
+<img src="./screenshots/import-preview.png">
 
 The final result will be a new google calander with all your courses!
 
-<img src="https://github.com/AbelWeldaregay/Banner-GCal-Schedule-Importer/blob/master/screenshots/final-result.png?raw=true">
+<img src="./screenshots/final-result.png">
 
 Make sure to switch to the schedule details tab!
 
-<img src="https://github.com/AbelWeldaregay/Banner-GCal-Schedule-Importer/blob/master/screenshots/navigate-to-details.png?raw=true">
+<img src="./screenshots/navigate-to-details.png">
 
 
 If you find any bugs, please contact abelweldaregay@gmail.com.
