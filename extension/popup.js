@@ -31,7 +31,7 @@ window.onload = function() {
 
 	   		document.getElementById("redirect-button").remove();
 	   	} else {
-	   		document.getElementById("pagecodediv").innerHTML = "<p>Please navigate to the Banner Schedule Details page as shown below:</p> <b> <img id='banner-example-image' src='banner-example.png' style='width: 100%'> <br>";
+	   		document.getElementById("pagecodediv").innerHTML = "<p>Please navigate to the Banner Schedule Details page as shown below: (<a target='_blank' href='https://abelweldaregay.github.io/Banner-GCal-Schedule-Importer/help'> click here for help</a> )</p> <b> <img id='banner-example-image' src='banner-example.png' style='width: 100%'> <br>";
    			document.getElementById("banner-example-image").style.display = "block";
 	   	}
 	    // use `url` here inside the callback because it's asynchronous!
