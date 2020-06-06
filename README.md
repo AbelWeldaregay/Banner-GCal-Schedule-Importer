@@ -21,4 +21,5 @@ If you find any bugs, please contact <b>abelweldaregay@gmail.com</b>.
 # Links
 - [Project Website](https://abelweldaregay.github.io/Banner-GCal-Schedule-Importer/)
 - [Privacy Policy](https://abelweldaregay.github.io/Banner-GCal-Schedule-Importer/privacy.html)
+- [Help Page](https://abelweldaregay.github.io/Banner-GCal-Schedule-Importer/help)
 
