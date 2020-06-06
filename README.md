@@ -16,7 +16,7 @@ You can also export your class schedule as an .ics file and import it to google 
 
   <img src="./screenshots/navigate-to-details.png">
 
-### If you find any bugs, please contact abelweldaregay@gmail.com.
+If you find any bugs, please contact <b>abelweldaregay@gmail.com</b>.
 
 # Links
 - [Project Website](https://abelweldaregay.github.io/Banner-GCal-Schedule-Importer/)
