@@ -8,7 +8,7 @@
 <b>2. Open the schedule details page and select a semester you want to import</b><br>
         1. View Registration Information
             <img src="./screenshots/help_registration.png">
-        2. Select a semester you want to import (1) and switch to the schedule details tab(2)
+        2. Select a semester you want to import (2) and switch to the schedule details tab(3)
             <img src="./screenshots/select_semester.png">
 <b>3. Open the extension and click "import schedule" and check out your new google calander filled with your classes for the semester!</b>
     <img src="./screenshots/final-result.png">
