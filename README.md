@@ -1,4 +1,4 @@
-# Banner-GCal-Schedule-Importer
+# Banner GCal Schedule Importer
 
 Tired of manually creating a new calendar for your courses every single semester? Look no further! This chrome extension will pull the data from your banner (after you navigate to the schedule details page) and create a google calendar for you, filled with your semester's schedule! You can also remove courses you do not want to import/export in the preview page!
 
