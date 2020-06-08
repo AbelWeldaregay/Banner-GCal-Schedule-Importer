@@ -55,50 +55,52 @@ function is_app_authorized() {
 }
 
 
-async function update_table() {
-	console.log(courses);
-	if (is_app_authorized() === false) {
-      	// Add event listener for import schedule button
-       	document.querySelector('#pagecodediv').innerHTML = "</br>You've come to the correct page! Please authorize this chrome extension to import your schedule!<br/><br/>After authenticating, come back to this page and use the extension again! The \"Allow Access\" button will change to allow importing!<br/><br/>";
-       	document.querySelector('#pagecodediv').innerHTML += authenticateButtonHTML;
+ async function update_table() {
+	chrome.identity.getAuthToken({
+		"interactive": false
+	}, function(token) {
+		console.log("token: " + token);
+		if (!token) {
+			// Add event listener for import schedule button
+			document.querySelector('#pagecodediv').innerHTML = "</br>You've come to the correct page! Please authorize this chrome extension to import your schedule!<br/><br/>After authenticating, come back to this page and use the extension again! The \"Allow Access\" button will change to allow importing!<br/><br/>";
+			document.querySelector('#pagecodediv').innerHTML += authenticateButtonHTML;
 
-       	document.getElementById("authenticate-button").addEventListener("click", function() {
-           authenticate();		
-       }, false);
-    } else {
-		document.querySelector('#button-div').innerHTML = importButtonHTML;
-		document.querySelector('#button-div').innerHTML += "<br>" + exportToIcsButtonHTML
-        var importScheduleButton = document.getElementById('import-button');
-        var exportToICSButton = document.getElementById("export-ics-button");
-        importScheduleButton.addEventListener('click', function () {
-        	ga('_trackEvent', 'importButton', 'clicked');
-     		importSchedule(courses, courses[0].selected_semester, courses[0].meeting_window[1]);
-        }, false);
-        exportToICSButton.addEventListener("click", function() {
-        	document.getElementById("export-ics-button").remove();
-        	document.getElementById("import-button").remove();
-        	document.getElementById("pagecodediv").innerHTML = "<br>Once it finishes downloading, upload it to <a target='_blank' href='https://calendar.google.com/calendar/r/settings/export'>Google calendar</a> or Microsoft Outlook Calendar yourself! </br></br>Make sure to create a new empty calendar to upload to if you prefer your course schedule in its own separate calendar."
-        	exportScheduleToIcs(courses, courses[0].selected_semester, courses[0].meeting_window[1]);
-        }, false);
-		
-		await build_preview();
-		var i = 0;
-		while (i < courses.length) {
-			document.getElementById(courses[i].id + "-button").addEventListener("click", function() {
-				console.log(this.id);
-				var course_id = this.id.replace("-button", "");
-				document.getElementById(this.id.replace("-button", "")).remove();
-				remove_course(course_id);
-			});
-			if (courses[i]["meeting_days"] === undefined)
-				i += 1;
-			else
-				i += courses[i]["meeting_days"].length;
+			document.getElementById("authenticate-button").addEventListener("click", function() {
+			authenticate();		
+		}, false);
+		} else {
+			document.querySelector('#button-div').innerHTML = importButtonHTML;
+			document.querySelector('#button-div').innerHTML += "<br>" + exportToIcsButtonHTML
+			var importScheduleButton = document.getElementById('import-button');
+			var exportToICSButton = document.getElementById("export-ics-button");
+			importScheduleButton.addEventListener('click', function () {
+				ga('_trackEvent', 'importButton', 'clicked');
+				 importSchedule(courses, courses[0].selected_semester, courses[0].meeting_window[1]);
+			}, false);
+			exportToICSButton.addEventListener("click", function() {
+				document.getElementById("export-ics-button").remove();
+				document.getElementById("import-button").remove();
+				document.getElementById("pagecodediv").innerHTML = "<br>Once it finishes downloading, upload it to <a target='_blank' href='https://calendar.google.com/calendar/r/settings/export'>Google calendar</a> or Microsoft Outlook Calendar yourself! </br></br>Make sure to create a new empty calendar to upload to if you prefer your course schedule in its own separate calendar."
+				exportScheduleToIcs(courses, courses[0].selected_semester, courses[0].meeting_window[1]);
+			}, false);
+			
+		    build_preview();
+			var i = 0;
+			while (i < courses.length) {
+				document.getElementById(courses[i].id + "-button").addEventListener("click", function() {
+					console.log(this.id);
+					var course_id = this.id.replace("-button", "");
+					document.getElementById(this.id.replace("-button", "")).remove();
+					remove_course(course_id);
+				});
+				if (courses[i]["meeting_days"] === undefined)
+					i += 1;
+				else
+					i += courses[i]["meeting_days"].length;
+			}
+
 		}
-
-
-
-	}
+	});
 }
 
 function build_preview() {
