@@ -217,7 +217,7 @@ function importSchedule(courseEventInfo, viewedSemester, semEndDate) {
     // POST request to create a new calendar
     var url = "https://www.googleapis.com/calendar/v3/calendars";
     var params = {
-      "summary": viewedSemester + " ODU Schedule",
+      "summary": viewedSemester + " Schedule",
       "timeZone": "America/New_York"
     };
     var xhr = new XMLHttpRequest();
