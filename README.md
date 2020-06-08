@@ -18,6 +18,10 @@ You can also export your class schedule as an .ics file and import it to google 
 
 If you find any bugs, please contact <b>abelweldaregay@gmail.com</b>.
 
+## Demo Video
+[![Demo Video](https://img.youtube.com/vi/X6XBlV7g34Q/0.jpg)](https://www.youtube.com/watch?v=X6XBlV7g34Q)
+
+
 # Links
 - [Project Website](https://abelweldaregay.github.io/Banner-GCal-Schedule-Importer/)
 - [Privacy Policy](https://abelweldaregay.github.io/Banner-GCal-Schedule-Importer/privacy.html)
