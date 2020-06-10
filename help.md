@@ -20,8 +20,9 @@
     <img src="./screenshots/final-result.png">
 
 ## Exporting
-TODO
 
+In order to export your schedule as an .ICS file, navigate to the banner (for your school) the same way you would for importing (shown above), and return to the extension. Once you open the extension again, press "EXPORT TO .ICS FILE".
 
-## FAQ
-// TODO
+Once it finishes downloading, upload it to Google calendar or Microsoft Outlook Calendar yourself!
+
+Make sure to create a new empty calendar to upload to if you prefer your course schedule in its own separate calendar.
