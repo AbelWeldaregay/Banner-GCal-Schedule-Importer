@@ -19,7 +19,7 @@
 <b>3. Open the extension and click "import schedule" and check out your new google calander filled with your classes for the semester!</b>
     <img src="./screenshots/final-result.png">
 
-## Exporting
+## Exporting to .ICS File
 
 In order to export your schedule as an .ICS file, navigate to the banner (for your school) the same way you would for importing (shown above), and return to the extension. Once you open the extension again, press "EXPORT TO .ICS FILE".
 
