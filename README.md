@@ -7,7 +7,7 @@ You can also export your class schedule as an .ics file and import it to google 
 [<img src="available-chrome-web-button.png" width="250">](https://chrome.google.com/webstore/detail/banner-gcal-schedule-impo/kecmgaogpplcgaldfeadlohpihlefcaj)
 
 ## Demo Video
-[![Demo Video](https://www.youtube.com/watch?v=Z-VRQLS9lo0)
+[![Demo Video](https://img.youtube.com/vi/Z-VRQLS9lo0/0.jpg)](https://www.youtube.com/watch?v=Z-VRQLS9lo0)
 
 ## After navigating to the scehdule details page, open the extension and click import!
 
