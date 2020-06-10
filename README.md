@@ -6,6 +6,9 @@ You can also export your class schedule as an .ics file and import it to google 
 
 [<img src="available-chrome-web-button.png" width="250">](https://chrome.google.com/webstore/detail/banner-gcal-schedule-impo/kecmgaogpplcgaldfeadlohpihlefcaj)
 
+## Demo Video
+[![Demo Video](https://www.youtube.com/watch?v=Z-VRQLS9lo0)
+
 ## After navigating to the scehdule details page, open the extension and click import!
 
   <img src="./screenshots/import-preview.png">
@@ -19,10 +22,6 @@ You can also export your class schedule as an .ics file and import it to google 
   <img src="./screenshots/navigate-to-details.png">
 
 If you find any bugs, please contact <b>abelweldaregay@gmail.com</b>.
-
-## Demo Video
-[![Demo Video](https://img.youtube.com/vi/X6XBlV7g34Q/0.jpg)](https://www.youtube.com/watch?v=X6XBlV7g34Q)
-
 
 # Links
 - [Project Website](https://abelweldaregay.github.io/Banner-GCal-Schedule-Importer/)
