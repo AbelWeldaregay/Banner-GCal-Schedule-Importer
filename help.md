@@ -6,7 +6,7 @@
 ## Importing
 <b>1. Navigate to the banner for your school</b>
 - If you are an ODU student, simply click "TAKE ME TO THE BANNER!" button and it will take you to the ODU banner
-     <img src = "./screenshots/banner_button.png" width=200 height = 400>
+     <img src = "./screenshots/banner_button.png">
 - If you are not from ODU, naviage to the banner for your school<br>
 
 <b>2. Open the schedule details page and select a semester you want to import</b><br>
