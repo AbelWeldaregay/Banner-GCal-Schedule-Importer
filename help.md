@@ -1,7 +1,7 @@
 # How to Use the Banner-GCal-Schedule-Importer
 
 ## Importing Demo
-[![Demo Video](https://img.youtube.com/vi/Z-VRQLS9lo0/0.jpg)](https://www.youtube.com/watch?v=Z-VRQLS9lo0)
+[![Demo Video](https://img.youtube.com/vi/Sz8kGmeJ-m4/0.jpg)](https://www.youtube.com/watch?v=Sz8kGmeJ-m4)
 
 ## Importing
 <b>1. Navigate to the banner for your school</b>
