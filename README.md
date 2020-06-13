@@ -23,6 +23,14 @@ You can also export your class schedule as an .ics file and import it to google 
 
 If you find any bugs, please contact <b>abelweldaregay@gmail.com</b>.
 
+## Language
+
+<img src="https://www.juicymedia.co.uk/application/files/4615/1838/4923/html_css_js.png" width=300 height = 115>
+
+## Requirments
+
+- [Google Chrome](https://www.google.com/chrome/?brand=CHBD&gclid=Cj0KCQjwz4z3BRCgARIsAES_OVcjVssXibnb-SZK-IgNT2RUfcuVPIz6m-OIsm92385-qla8-jiCe4MaAicEEALw_wcB&gclsrc=aw.ds)
+
 # Links
 - [Project Website](https://abelweldaregay.github.io/Banner-GCal-Schedule-Importer/)
 - [Privacy Policy](https://abelweldaregay.github.io/Banner-GCal-Schedule-Importer/privacy.html)
