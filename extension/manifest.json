@@ -1,0 +1,44 @@
+{
+	"name": "Banner GCal Schedule Importer",
+	"description": "Chrome Extension that imports your class schedule directly into a new Google Calendar. Created by Abel Weldaregay",
+	"version": "1.05",
+	"icons": {
+		"16": "icons/icon16.png",
+		"48": "icons/icon48.png",
+		"128": "icons/icon128.png"
+	},
+	"browser_action": {
+		"default_icon": "icons/icon19.png",
+		"default_popup": "popup.html"
+	},
+	"manifest_version": 2,
+	"content_scripts": [
+		{
+			"matches": [
+				"https://xessb.odu.edu/StudentRegistrationSsb/ssb/registrationHistory/*",
+				"http://xessb.odu.edu/StudentRegistrationSsb/ssb/registrationHistory/*"
+			],
+			"js": ["extract_schedule.js"]
+		}
+	],
+	"permissions": [
+		"activeTab",
+		"tabs",
+		"identity",
+		"https://ajax.googleapis.com/*",
+		"https://apis.google.com/*",
+		"http://xessb.odu.edu/StudentRegistrationSsb/ssb/registrationHistory/*",
+		"https://xessb.odu.edu/StudentRegistrationSsb/ssb/registrationHistory/*",
+		"https://apis.google.com/*"
+	],
+	"oauth2": {
+    	"client_id": "602578747140-lur38jmot2nb3ru6b60bisn6naegatln.apps.googleusercontent.com",
+    	"scopes": [
+      		"https://www.googleapis.com/auth/calendar"
+    	]
+  	},
+  	"content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
+  	"background": {
+		"scripts": ["background.js"]
+	}
+}
