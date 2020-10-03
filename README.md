@@ -25,7 +25,7 @@ If you find any bugs, please contact <b>abelweldaregay@gmail.com</b>.
 
 ## Language
 
-<img src="https://www.juicymedia.co.uk/application/files/4615/1838/4923/html_css_js.png" width=300 height = 115>
+<img src="./screenshots/language.png" width=300 height = 115>
 
 ## Requirments
 
