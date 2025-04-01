@@ -6,6 +6,10 @@ You can also export your class schedule as an .ics file and import it to google 
 
 [<img src="available-chrome-web-button.png" width="250">](https://chrome.google.com/webstore/detail/banner-gcal-schedule-impo/kecmgaogpplcgaldfeadlohpihlefcaj)
 
+## Design Flow Diagram
+
+<img src="./diagram.png">
+
 ## Demo Video
 [![Demo Video](https://img.youtube.com/vi/Sz8kGmeJ-m4/0.jpg)](https://www.youtube.com/watch?v=Sz8kGmeJ-m4)
 
